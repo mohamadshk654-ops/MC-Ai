@@ -3,376 +3,392 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MC-Ai | Next-Gen AI Computation Hub</title>
-    <!-- Tailwind CSS -->
+    <title>MC-Ai | منصة الذكاء الاصطناعي والاستثمار الرقمي</title>
+    <!-- Tailwind CSS CDN -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <!-- Google Fonts -->
-    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
-    
-    <style>
-        * { font-family: 'Tajawal', sans-serif; }
-        .bg-mesh {
-            background-color: #0b0f19;
-            background-image: 
-                radial-gradient(at 0% 0%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
-                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
-                radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+    <!-- Google Fonts: Tajawal -->
+    <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        sans: ['Tajawal', 'sans-serif'],
+                    },
+                    colors: {
+                        darkBg: '#0B0F17',
+                        cardBg: 'rgba(18, 24, 38, 0.75)',
+                        aiCyan: '#00F0FF',
+                        aiPurple: '#7000FF',
+                        aiPink: '#FF007A',
+                    },
+                    boxShadow: {
+                        'neon-cyan': '0 0 20px rgba(0, 240, 255, 0.35)',
+                        'neon-purple': '0 0 20px rgba(112, 0, 255, 0.35)',
+                    }
+                }
+            }
         }
+    </script>
+
+    <style>
+        body {
+            background-color: #0B0F17;
+            background-image: 
+                radial-gradient(circle at 15% 15%, rgba(112, 0, 255, 0.15) 0%, transparent 45%),
+                radial-gradient(circle at 85% 85%, rgba(0, 240, 255, 0.12) 0%, transparent 45%);
+            background-attachment: fixed;
+            color: #E2E8F0;
+        }
+
         .glass-card {
-            background: rgba(18, 24, 38, 0.75);
+            background: rgba(18, 24, 38, 0.7);
             backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
             border: 1px solid rgba(255, 255, 255, 0.08);
         }
-        .glass-card-hover:hover {
-            border-color: rgba(225, 29, 72, 0.4);
-            box-shadow: 0 10px 30px -10px rgba(225, 29, 72, 0.3);
+
+        .gradient-text {
+            background: linear-gradient(135deg, #00F0FF 0%, #7000FF 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .gradient-btn {
+            background: linear-gradient(135deg, #00F0FF 0%, #7000FF 100%);
+            transition: all 0.3s ease;
+        }
+
+        .gradient-btn:hover {
+            box-shadow: 0 0 25px rgba(0, 240, 255, 0.5);
             transform: translateY(-2px);
         }
-        .neon-glow {
-            box-shadow: 0 0 20px rgba(225, 29, 72, 0.4);
+
+        .pulse-glow {
+            animation: pulseGlow 3s infinite alternate;
         }
-        .geometric-grid {
-            background-size: 30px 30px;
-            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+
+        @keyframes pulseGlow {
+            0% { border-color: rgba(0, 240, 255, 0.3); }
+            100% { border-color: rgba(112, 0, 255, 0.8); }
         }
     </style>
 </head>
-<body class="bg-mesh geometric-grid text-gray-100 min-h-screen pb-24 max-w-md mx-auto relative border-x border-gray-800/50 shadow-2xl overflow-x-hidden">
+<body class="font-sans min-h-screen pb-12 antialiased selection:bg-aiCyan selection:text-black">
 
-    <!-- Top Floating Header -->
-    <header class="p-4 sticky top-0 z-40 bg-opacity-80 backdrop-blur-md bg-[#0b0f19] border-b border-gray-800/60 flex justify-between items-center">
-        <div class="flex items-center space-x-3 space-x-reverse">
-            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 via-rose-500 to-amber-500 flex items-center justify-center font-black text-white text-xl shadow-lg neon-glow">
-                MC
+    <!-- Header / Navbar -->
+    <header class="sticky top-0 z-50 glass-card border-b border-white/10 px-4 py-3">
+        <div class="max-w-6xl mx-auto flex justify-between items-center">
+            <!-- Logo -->
+            <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl gradient-btn flex items-center justify-center text-black font-extrabold text-xl shadow-neon-cyan">
+                    MC
+                </div>
+                <div>
+                    <h1 class="text-xl font-black tracking-wider text-white">MC-<span class="gradient-text">Ai</span></h1>
+                    <p class="text-[10px] text-gray-400 -mt-1">Quantum Trading Network</p>
+                </div>
             </div>
-            <div>
-                <h1 class="font-black text-lg tracking-wider text-white leading-tight">MC-Ai <span class="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">PRO</span></h1>
-                <p class="text-[10px] text-gray-400 font-medium">الشبكة الكمومية للذكاء الاصطناعي</p>
+
+            <!-- Profile & Quick Actions -->
+            <div class="flex items-center gap-3">
+                <span class="hidden sm:inline-block text-xs bg-emerald-500/10 text-emerald-400 border border-emerald-500/20 px-3 py-1 rounded-full">
+                    <i class="fa-solid fa-circle text-[8px] animate-ping ml-1"></i> النظام متصل
+                </span>
+                <button onclick="openModal('depositModal')" class="gradient-btn text-black font-bold text-xs px-4 py-2 rounded-xl flex items-center gap-1.5 shadow-lg">
+                    <i class="fa-solid fa-plus-circle"></i>
+                    إيداع
+                </button>
             </div>
         </div>
-        <button onclick="switchTab('deposit')" class="bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-lg transition duration-200 flex items-center gap-1.5 border border-rose-400/30">
-            <i class="fa-solid fa-bolt text-yellow-300 animate-pulse"></i> إيداع سريع
-        </button>
     </header>
 
-    <!-- Main Dynamic Content -->
-    <main class="p-4 space-y-5">
+    <main class="max-w-6xl mx-auto px-4 mt-6 space-y-6">
 
-        <!-- TAB 1: HOME -->
-        <div id="tab-home" class="space-y-5">
-            
-            <!-- Hero Investment Banner -->
-            <div class="glass-card rounded-3xl p-5 relative overflow-hidden border border-rose-500/20">
-                <div class="absolute -left-10 -bottom-10 w-36 h-36 bg-rose-600/20 rounded-full blur-2xl"></div>
-                <div class="relative z-10 space-y-3">
-                    <div class="flex justify-between items-start">
-                        <span class="bg-rose-500/10 text-rose-400 text-[11px] font-bold px-3 py-1 rounded-full border border-rose-500/20">
-                            🔥 باقة الاستثمار الأكثر إنتاجية
-                        </span>
-                        <span class="text-xs text-gray-400"><i class="fa-solid fa-shield-halved text-emerald-400"></i> حماية 100%</span>
+        <!-- Banner / Hero Section -->
+        <div class="glass-card rounded-2xl p-6 sm:p-8 relative overflow-hidden pulse-glow border border-white/10">
+            <div class="relative z-10 flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
+                <div>
+                    <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-aiPurple/20 border border-aiPurple/30 text-aiCyan text-xs mb-3">
+                        <i class="fa-solid fa-wand-magic-sparkles"></i> خوارزمية AI v4.2 المحدثة
                     </div>
-                    <h2 class="text-xl font-black text-white">ضخ استثمارك في خوادم <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300">MC-Quantum</span></h2>
-                    <p class="text-xs text-gray-300 leading-relaxed">
-                        اختر إحدى عقد الحوسبة اليومية وابدأ بتحصيل العوائد السريعة عبر تقنية معالجة البيانات الكمية.
+                    <h2 class="text-2xl sm:text-3xl font-extrabold text-white leading-snug">
+                        تداول ذكي، أرباح مستقرة بالـ <span class="gradient-text">USDT</span>
+                    </h2>
+                    <p class="text-gray-400 text-sm mt-2 max-w-xl">
+                        منصة MC-Ai تعتمد على التداول الكمي بالذكاء الاصطناعي لتحقيق عائدات يومية متوازنة وتلقائية بدون مخاطر الانهيار.
                     </p>
-
-                    <!-- Realtime Statistics Counter -->
-                    <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-800/80">
-                        <div>
-                            <p class="text-[10px] text-gray-400">إجمالي الأرباح الموزعة</p>
-                            <p class="text-sm font-extrabold text-emerald-400">$1,482,910 USDT</p>
-                        </div>
-                        <div>
-                            <p class="text-[10px] text-gray-400">عقد المعالجة النشطة</p>
-                            <p class="text-sm font-extrabold text-amber-400">18,420 عقدة</p>
-                        </div>
-                    </div>
                 </div>
-            </div>
-
-            <!-- Profit Calculator Widget -->
-            <div class="glass-card rounded-2xl p-4 space-y-3 border border-indigo-500/20">
-                <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-xs text-gray-200 flex items-center gap-2">
-                        <i class="fa-solid fa-calculator text-indigo-400"></i> حاسبة الأرباح التقديرية
-                    </h3>
-                    <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-md">تحديث حي</span>
-                </div>
-                <div class="space-y-1">
-                    <div class="flex justify-between text-xs font-bold">
-                        <span class="text-gray-400">مبلغ الإيداع:</span>
-                        <span id="calc-amount" class="text-amber-400 font-extrabold">$100 USDT</span>
-                    </div>
-                    <input type="range" min="20" max="1000" step="10" value="100" id="calc-slider" oninput="updateCalc()" class="w-full accent-rose-500 bg-gray-800 rounded-lg cursor-pointer h-2">
-                </div>
-                <div class="grid grid-cols-2 gap-2 bg-gray-900/60 p-2.5 rounded-xl border border-gray-800">
-                    <div class="text-center">
-                        <p class="text-[10px] text-gray-400">الربح اليومي متوقع</p>
-                        <p id="calc-daily" class="text-sm font-black text-emerald-400">+$12.50</p>
-                    </div>
-                    <div class="text-center">
-                        <p class="text-[10px] text-gray-400">الربح الشهري متوقع</p>
-                        <p id="calc-monthly" class="text-sm font-black text-rose-400">+$375.00</p>
-                    </div>
-                </div>
-                <button onclick="switchTab('deposit')" class="w-full bg-gradient-to-r from-rose-600 to-indigo-600 text-white font-extrabold text-xs py-2.5 rounded-xl hover:opacity-90 shadow-md transition">
-                    اشحن الرصيد لتفعيل هذا العائد الآن
-                </button>
-            </div>
-
-            <!-- Locked Hardware Nodes (VIP Levels) -->
-            <div class="space-y-3">
-                <div class="flex justify-between items-center">
-                    <h3 class="font-black text-sm text-gray-100 flex items-center gap-2">
-                        <i class="fa-solid fa-server text-rose-500"></i> عقد الحوسبة المتاحة
-                    </h3>
-                    <span class="text-[10px] text-rose-400 font-bold animate-pulse">● جميع الخُطط تحتاج إيداع للبدء</span>
-                </div>
-
-                <!-- Node 1 -->
-                <div class="glass-card glass-card-hover rounded-2xl p-4 transition-all duration-200 border-l-4 border-l-rose-500 space-y-3">
-                    <div class="flex justify-between items-start">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500/20 to-rose-700/30 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl font-black">
-                                A1
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm text-white">عقدة MC-Alpha 1.0</h4>
-                                <p class="text-[11px] text-gray-400">دورة معالجة: <span class="text-gray-200 font-semibold">24 ساعة</span></p>
-                            </div>
-                        </div>
-                        <span class="bg-gray-800 text-gray-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-gray-700">
-                            <i class="fa-solid fa-lock text-amber-400"></i> مقفول
-                        </span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1 bg-gray-900/40 p-2 rounded-xl text-center border border-gray-800/50">
-                        <div>
-                            <p class="text-[9px] text-gray-400">تكلفة التفعيل</p>
-                            <p class="text-xs font-bold text-amber-400">$30 USDT</p>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-400">الربح اليومي</p>
-                            <p class="text-xs font-bold text-emerald-400">$3.60 USDT</p>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-400">العائد الإجمالي</p>
-                            <p class="text-xs font-bold text-rose-400">$108.00</p>
-                        </div>
-                    </div>
-                    <button onclick="switchTab('deposit')" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs py-2 rounded-xl shadow-md flex items-center justify-center gap-2 transition">
-                        <i class="fa-solid fa-key text-xs"></i> إيداع $30 لفتح العقدة
+                <div class="flex gap-3 w-full md:w-auto">
+                    <button onclick="openModal('depositModal')" class="flex-1 md:flex-none gradient-btn text-black font-bold px-6 py-3 rounded-xl text-sm text-center">
+                        بدء الاستثمار
                     </button>
-                </div>
-
-                <!-- Node 2 -->
-                <div class="glass-card glass-card-hover rounded-2xl p-4 transition-all duration-200 border-l-4 border-l-indigo-500 space-y-3">
-                    <div class="flex justify-between items-start">
-                        <div class="flex items-center gap-3">
-                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-indigo-700/30 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl font-black">
-                                B2
-                            </div>
-                            <div>
-                                <h4 class="font-bold text-sm text-white">عقدة MC-Beta Ultra</h4>
-                                <p class="text-[11px] text-gray-400">دورة معالجة: <span class="text-gray-200 font-semibold">24 ساعة</span></p>
-                            </div>
-                        </div>
-                        <span class="bg-gray-800 text-gray-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-gray-700">
-                            <i class="fa-solid fa-lock text-amber-400"></i> مقفول
-                        </span>
-                    </div>
-                    <div class="grid grid-cols-3 gap-1 bg-gray-900/40 p-2 rounded-xl text-center border border-gray-800/50">
-                        <div>
-                            <p class="text-[9px] text-gray-400">تكلفة التفعيل</p>
-                            <p class="text-xs font-bold text-amber-400">$100 USDT</p>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-400">الربح اليومي</p>
-                            <p class="text-xs font-bold text-emerald-400">$14.50 USDT</p>
-                        </div>
-                        <div>
-                            <p class="text-[9px] text-gray-400">العائد الإجمالي</p>
-                            <p class="text-xs font-bold text-rose-400">$435.00</p>
-                        </div>
-                    </div>
-                    <button onclick="switchTab('deposit')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl shadow-md flex items-center justify-center gap-2 transition">
-                        <i class="fa-solid fa-key text-xs"></i> إيداع $100 لفتح العقدة
+                    <button onclick="openModal('withdrawModal')" class="flex-1 md:flex-none bg-white/5 hover:bg-white/10 text-white font-semibold px-6 py-3 rounded-xl border border-white/10 text-sm transition">
+                        سحب الأرباح
                     </button>
                 </div>
             </div>
-
-            <!-- Live Deposit Stream Alert -->
-            <div id="live-deposit-toast" class="glass-card rounded-xl p-3 border border-emerald-500/30 flex items-center gap-3">
-                <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
-                    <i class="fa-solid fa-arrow-down-left"></i>
-                </div>
-                <div class="text-xs">
-                    <p class="font-bold text-gray-200">قام المستخدم <span class="text-amber-400">User_9281</span> بتفعيل عقدة Beta!</p>
-                    <p class="text-[10px] text-emerald-400 font-medium">إيداع ناجح: +$100 USDT قبل 12 ثانية</p>
-                </div>
-            </div>
-
         </div>
 
-        <!-- TAB 2: DEPOSIT (PAGE WITH QR CODE & CRYPTO NETWORKS) -->
-        <div id="tab-deposit" class="hidden space-y-4">
-            <div class="glass-card rounded-2xl p-4 border border-rose-500/30 space-y-4">
-                <div class="text-center space-y-1">
-                    <h3 class="font-black text-lg text-white">مركز الشحن الفوري</h3>
-                    <p class="text-xs text-gray-400">اختر عملة الإيداع المطلوبة واشحن حسابك فورياً</p>
+        <!-- Dashboard / Balance Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+            <!-- Card 1: Main Balance -->
+            <div class="glass-card rounded-2xl p-5 border-l-4 border-l-aiCyan">
+                <div class="flex justify-between items-center text-gray-400 text-xs font-medium">
+                    <span>الرصيد الكلي</span>
+                    <i class="fa-solid fa-wallet text-aiCyan text-lg"></i>
+                </div>
+                <div class="mt-3 flex items-baseline gap-1">
+                    <span class="text-2xl font-black text-white" id="mainBalance">1,250.00</span>
+                    <span class="text-xs font-bold text-aiCyan">USDT</span>
+                </div>
+                <div class="mt-2 text-[11px] text-emerald-400 flex items-center gap-1">
+                    <i class="fa-solid fa-arrow-trend-up"></i> +12.5% هذا الأسبوع
+                </div>
+            </div>
+
+            <!-- Card 2: Today's Profit -->
+            <div class="glass-card rounded-2xl p-5 border-l-4 border-l-aiPurple">
+                <div class="flex justify-between items-center text-gray-400 text-xs font-medium">
+                    <span>أرباح اليوم (AI)</span>
+                    <i class="fa-solid fa-microchip text-aiPurple text-lg"></i>
+                </div>
+                <div class="mt-3 flex items-baseline gap-1">
+                    <span class="text-2xl font-black text-white" id="todayProfit">34.80</span>
+                    <span class="text-xs font-bold text-aiPurple">USDT</span>
+                </div>
+                <div class="mt-2 text-[11px] text-gray-400">
+                    تم تنفيذ 18 صفقة ناجحة
+                </div>
+            </div>
+
+            <!-- Card 3: Active Investments -->
+            <div class="glass-card rounded-2xl p-5 border-l-4 border-l-emerald-400">
+                <div class="flex justify-between items-center text-gray-400 text-xs font-medium">
+                    <span>الاستثمارات النشطة</span>
+                    <i class="fa-solid fa-chart-line text-emerald-400 text-lg"></i>
+                </div>
+                <div class="mt-3 flex items-baseline gap-1">
+                    <span class="text-2xl font-black text-white">500.00</span>
+                    <span class="text-xs font-bold text-emerald-400">USDT</span>
+                </div>
+                <div class="mt-2 text-[11px] text-gray-400">
+                    خطة: Quantum Node Alpha
+                </div>
+            </div>
+
+            <!-- Card 4: Total Withdrawals -->
+            <div class="glass-card rounded-2xl p-5 border-l-4 border-l-aiPink">
+                <div class="flex justify-between items-center text-gray-400 text-xs font-medium">
+                    <span>إجمالي المسحوبات</span>
+                    <i class="fa-solid fa-money-bill-transfer text-aiPink text-lg"></i>
+                </div>
+                <div class="mt-3 flex items-baseline gap-1">
+                    <span class="text-2xl font-black text-white">410.00</span>
+                    <span class="text-xs font-bold text-aiPink">USDT</span>
+                </div>
+                <div class="mt-2 text-[11px] text-gray-400">
+                    آخر سحب: منذ يومين
+                </div>
+            </div>
+        </div>
+
+        <!-- Investment Plans Section -->
+        <div>
+            <div class="flex justify-between items-end mb-4">
+                <div>
+                    <h3 class="text-xl font-bold text-white">خطط الذكاء الاصطناعي (AI Nodes)</h3>
+                    <p class="text-xs text-gray-400 mt-1">اختر الباقة المناسبة للبدء بالتداول الآلي عبر العقود الذكية</p>
+                </div>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+
+                <!-- Plan 1 -->
+                <div class="glass-card rounded-2xl p-6 relative flex flex-col justify-between hover:border-aiCyan/50 transition duration-300">
+                    <div>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs font-bold text-aiCyan bg-aiCyan/10 border border-aiCyan/20 px-3 py-1 rounded-full">المستوى الأساسي</span>
+                            <i class="fa-solid fa-bolt text-aiCyan"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">AI Core Starter</h4>
+                        <div class="my-4">
+                            <span class="text-3xl font-black text-white">50</span>
+                            <span class="text-sm font-semibold text-gray-400">USDT (الحد أدنى)</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> عائد يومي: <strong>2.5%</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> مدة العقد: <strong>30 يوم</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> إرجاع رأس المال: <strong>نهاية العقد</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> سحب الأرباح: <strong>يومياً</strong></li>
+                        </ul>
+                    </div>
+                    <button onclick="openModal('depositModal')" class="w-full py-3 bg-white/5 hover:bg-aiCyan hover:text-black font-bold text-xs rounded-xl border border-white/10 transition duration-300">
+                        تفعيل العقد الآن
+                    </button>
                 </div>
 
-                <!-- Network Selection Buttons -->
-                <div class="grid grid-cols-2 gap-2">
-                    <button class="p-3 rounded-xl bg-rose-600/20 border border-rose-500 text-white text-xs font-bold flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-coins text-emerald-400"></i> USDT (TRC20)
-                    </button>
-                    <button class="p-3 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-400 text-xs font-bold flex items-center justify-center gap-2 hover:border-gray-500">
-                        <i class="fa-solid fa-bolt text-yellow-400"></i> USDT (BEP20)
-                    </button>
-                </div>
-
-                <!-- QR & Address Display -->
-                <div class="bg-gray-900/80 rounded-2xl p-4 text-center space-y-3 border border-gray-800">
-                    <div class="bg-white p-2 w-32 h-32 mx-auto rounded-xl shadow-lg flex items-center justify-center">
-                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TMCaiQuantumServerNodeDepositAddress99" alt="Deposit QR Code" class="w-full h-full">
+                <!-- Plan 2 (Featured) -->
+                <div class="glass-card rounded-2xl p-6 relative flex flex-col justify-between border-2 border-aiPurple shadow-neon-purple scale-100 md:scale-105 bg-gradient-to-b from-aiPurple/10 to-transparent">
+                    <div class="absolute -top-3 right-6 bg-aiPurple text-white text-[10px] font-bold px-3 py-0.5 rounded-full uppercase tracking-wider">
+                        الأكثر إقبالاً 🔥
                     </div>
                     <div>
-                        <p class="text-[10px] text-gray-400 mb-1">عنوان محفظة الإيداع الرسمية (TRC20):</p>
-                        <div class="flex items-center justify-between bg-black/50 p-2.5 rounded-xl border border-gray-800 text-xs">
-                            <span class="text-rose-400 font-mono font-bold truncate">TMCaiQ89XzNaP2x9001vK82mLa910pQ</span>
-                            <button onclick="copyAddress()" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded-lg text-[10px] font-bold">نسخ</button>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs font-bold text-aiPurple bg-aiPurple/20 border border-aiPurple/30 px-3 py-1 rounded-full">المستوى المتقدم</span>
+                            <i class="fa-solid fa-brain text-aiPurple"></i>
                         </div>
+                        <h4 class="text-lg font-bold text-white">Quantum Node Pro</h4>
+                        <div class="my-4">
+                            <span class="text-3xl font-black text-white">250</span>
+                            <span class="text-sm font-semibold text-gray-400">USDT (الحد أدنى)</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-200 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> عائد يومي: <strong>3.8%</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> مدة العقد: <strong>45 يوم</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> إرجاع رأس المال: <strong>نهاية العقد</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiCyan"></i> دعم فني مخصص 24/7</li>
+                        </ul>
                     </div>
+                    <button onclick="openModal('depositModal')" class="w-full py-3 gradient-btn text-black font-bold text-xs rounded-xl shadow-lg">
+                        تفعيل العقد المتقدم
+                    </button>
                 </div>
 
-                <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-xs text-amber-300 space-y-1">
-                    <p class="font-bold"><i class="fa-solid fa-triangle-exclamation"></i> تنبيه هدم الخدمة:</p>
-                    <ul class="text-[11px] text-gray-300 list-disc list-inside space-y-0.5">
-                        <li>الحد الأدنى للإيداع هو $20 USDT.</li>
-                        <li>تضاف مكافأة تفعيل 10%+ فور اكتمال معالجة المحفظة.</li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-
-        <!-- TAB 3: TASKS / COMPUTATION HUB -->
-        <div id="tab-tasks" class="hidden space-y-4">
-            <div class="glass-card rounded-2xl p-4 text-center space-y-2 border border-gray-800">
-                <i class="fa-solid fa-microchip text-4xl text-rose-500 animate-pulse"></i>
-                <h3 class="font-bold text-sm text-white">مركز المعالجة الذكي</h3>
-                <p class="text-xs text-gray-400">تقتضي سياسة MC-Ai تفعيل عقدة استثمارية واحدة على الأقل قبل فتح صلاحية تنفيذ المهام اليومية.</p>
-                <button onclick="switchTab('deposit')" class="mt-2 bg-gradient-to-r from-rose-600 to-amber-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-lg">
-                    قم بالإيداع الآن لفتح المهام
-                </button>
-            </div>
-        </div>
-
-        <!-- TAB 4: PROFILE -->
-        <div id="tab-profile" class="hidden space-y-4">
-            <div class="glass-card rounded-2xl p-4 border border-gray-800 flex items-center justify-between">
-                <div class="flex items-center gap-3">
-                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center font-bold text-white text-lg">
-                        <i class="fa-solid fa-user-astronaut"></i>
-                    </div>
+                <!-- Plan 3 -->
+                <div class="glass-card rounded-2xl p-6 relative flex flex-col justify-between hover:border-aiPink/50 transition duration-300">
                     <div>
-                        <h4 class="font-bold text-sm text-white">مستخدم #88902</h4>
-                        <p class="text-xs text-gray-400">الحالة: <span class="text-rose-500 font-bold">غير مفعل (يحتاج إيداع)</span></p>
+                        <div class="flex justify-between items-center mb-4">
+                            <span class="text-xs font-bold text-aiPink bg-aiPink/10 border border-aiPink/20 px-3 py-1 rounded-full">كبار المستثمرين</span>
+                            <i class="fa-solid fa-crown text-aiPink"></i>
+                        </div>
+                        <h4 class="text-lg font-bold text-white">MC VIP Institutional</h4>
+                        <div class="my-4">
+                            <span class="text-3xl font-black text-white">1,000</span>
+                            <span class="text-sm font-semibold text-gray-400">USDT (الحد أدنى)</span>
+                        </div>
+                        <ul class="space-y-3 text-xs text-gray-300 mb-6">
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiPink"></i> عائد يومي: <strong>5.2%</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiPink"></i> مدة العقد: <strong>60 يوم</strong></li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiPink"></i> سحب فوري تلقائي</li>
+                            <li class="flex items-center gap-2"><i class="fa-solid fa-check text-aiPink"></i> نسبة إحالة مضاعفة</li>
+                        </ul>
                     </div>
+                    <button onclick="openModal('depositModal')" class="w-full py-3 bg-white/5 hover:bg-aiPink hover:text-white font-bold text-xs rounded-xl border border-white/10 transition duration-300">
+                        تفعيل العقد الملكي
+                    </button>
                 </div>
-            </div>
 
-            <div class="glass-card rounded-2xl p-2 border border-gray-800 divide-y divide-gray-800/60 text-xs">
-                <a href="#" onclick="switchTab('deposit')" class="p-3 flex justify-between items-center text-gray-300 hover:text-white">
-                    <span><i class="fa-solid fa-wallet text-rose-500 w-5"></i> سجل الإيداعات والسحوبات</span>
-                    <i class="fa-solid fa-chevron-left text-gray-500"></i>
-                </a>
-                <a href="#" class="p-3 flex justify-between items-center text-gray-300 hover:text-white">
-                    <span><i class="fa-solid fa-headset text-indigo-400 w-5"></i> الدعم الفني المباشر (24/7)</span>
-                    <i class="fa-solid fa-chevron-left text-gray-500"></i>
-                </a>
             </div>
         </div>
 
     </main>
 
-    <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#0b0f19]/90 backdrop-blur-lg border-t border-gray-800 px-6 py-2.5 flex justify-between items-center z-50">
-        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-rose-500">
-            <i class="fa-solid fa-cubes text-lg"></i>
-            <span class="text-[10px] font-bold mt-1">الرئيسية</span>
-        </button>
-        <button onclick="switchTab('tasks')" id="nav-tasks" class="flex flex-col items-center text-gray-500 hover:text-gray-300">
-            <i class="fa-solid fa-list-check text-lg"></i>
-            <span class="text-[10px] font-bold mt-1">المهام</span>
-        </button>
-        <button onclick="switchTab('deposit')" id="nav-deposit" class="flex flex-col items-center text-gray-500 hover:text-gray-300">
-            <i class="fa-solid fa-wallet text-lg"></i>
-            <span class="text-[10px] font-bold mt-1">الإيداع</span>
-        </button>
-        <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center text-gray-500 hover:text-gray-300">
-            <i class="fa-solid fa-user text-lg"></i>
-            <span class="text-[10px] font-bold mt-1">حسابي</span>
-        </button>
-    </nav>
+    <!-- Deposit Modal (نافذة الإيداع) -->
+    <div id="depositModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="glass-card max-w-md w-full rounded-2xl p-6 relative border border-aiCyan/30 shadow-neon-cyan">
+            <button onclick="closeModal('depositModal')" class="absolute top-4 left-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-xl font-bold text-white mb-1"><i class="fa-solid fa-qrcode text-aiCyan ml-2"></i> إيداع USDT</h3>
+            <p class="text-xs text-gray-400 mb-5">قم بتحويل المبلغ المطلوبة عبر شبكة TRC20 أو BEP20</p>
 
-    <!-- JavaScript Interactions -->
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-gray-300 font-semibold mb-1 block">اختر شبكة التحويل:</label>
+                    <select class="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-aiCyan">
+                        <option value="TRC20">USDT - TRC20 (Tron Network)</option>
+                        <option value="BEP20">USDT - BEP20 (BNB Smart Chain)</option>
+                    </select>
+                </div>
+
+                <div>
+                    <label class="text-xs text-gray-300 font-semibold mb-1 block">عنوان المحفظة الخاص بالمنصة:</label>
+                    <div class="flex items-center bg-black/60 border border-white/10 rounded-xl p-2.5">
+                        <input type="text" readonly value="TMCai99X87aQzP2kM10vL9901XN4a90LKPO" id="walletAddress" class="bg-transparent text-xs text-aiCyan font-mono w-full focus:outline-none">
+                        <button onclick="copyWallet()" class="bg-aiCyan/20 text-aiCyan hover:bg-aiCyan hover:text-black font-bold text-xs px-3 py-1.5 rounded-lg transition">
+                            نسخ
+                        </button>
+                    </div>
+                </div>
+
+                <div>
+                    <label class="text-xs text-gray-300 font-semibold mb-1 block">المبلغ المراد إيداعه (USDT):</label>
+                    <input type="number" placeholder="أدخل المبلغ مثل: 100" class="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-aiCyan">
+                </div>
+
+                <div>
+                    <label class="text-xs text-gray-300 font-semibold mb-1 block">رقم المعاملة / Hash (TxID):</label>
+                    <input type="text" placeholder="أدخل رمز TxID لتأكيد التحويل" class="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-aiCyan">
+                </div>
+
+                <button onclick="alert('تم ارسال طلب الإيداع بنجاح، سيتم التأكيد خلال دقائق!'); closeModal('depositModal');" class="w-full gradient-btn text-black font-bold py-3 rounded-xl text-sm shadow-lg mt-2">
+                    تأكيد الإيداع
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Modal (نافذة السحب) -->
+    <div id="withdrawModal" class="fixed inset-0 bg-black/80 backdrop-blur-md hidden items-center justify-center z-50 p-4">
+        <div class="glass-card max-w-md w-full rounded-2xl p-6 relative border border-aiPurple/30 shadow-neon-purple">
+            <button onclick="closeModal('withdrawModal')" class="absolute top-4 left-4 text-gray-400 hover:text-white text-lg">
+                <i class="fa-solid fa-xmark"></i>
+            </button>
+            
+            <h3 class="text-xl font-bold text-white mb-1"><i class="fa-solid fa-arrow-up-from-bracket text-aiPurple ml-2"></i> سحب الأرباح</h3>
+            <p class="text-xs text-gray-400 mb-5">السحب متاح فورياً لملايين المحافظ الإلكترونية</p>
+
+            <div class="space-y-4">
+                <div>
+                    <label class="text-xs text-gray-300 font-semibold mb-1 block">عنوان محفظتك (USDT TRC20):</label>
+                    <input type="text" placeholder="ضع عنوان محفظتك هنا" class="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-aiPurple">
+                </div>
+
+                <div>
+                    <label class="text-xs text-gray-300 font-semibold mb-1 block">المبلغ المراد سحبه (USDT):</label>
+                    <input type="number" placeholder="الحد الأدنى للسحب 10 USDT" class="w-full bg-black/50 border border-white/10 rounded-xl px-3 py-2.5 text-sm text-white focus:outline-none focus:border-aiPurple">
+                </div>
+
+                <div class="bg-white/5 rounded-xl p-3 text-xs text-gray-400 space-y-1">
+                    <div class="flex justify-between">
+                        <span>عمولة السحب:</span>
+                        <span class="text-white">1 USDT</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span>الوصول المتوقع:</span>
+                        <span class="text-emerald-400">فوري (1-5 دقائق)</span>
+                    </div>
+                </div>
+
+                <button onclick="alert('تم تقديم طلب السحب بنجاح!'); closeModal('withdrawModal');" class="w-full bg-aiPurple hover:bg-aiPurple/80 text-white font-bold py-3 rounded-xl text-sm shadow-lg mt-2 transition">
+                    تأكيد طلب السحب
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- JavaScript Functions -->
     <script>
-        function switchTab(tabId) {
-            const tabs = ['home', 'deposit', 'tasks', 'profile'];
-            tabs.forEach(t => {
-                document.getElementById(`tab-${t}`).classList.add('hidden');
-                const navBtn = document.getElementById(`nav-${t}`);
-                if(navBtn) {
-                    navBtn.classList.remove('text-rose-500');
-                    navBtn.classList.add('text-gray-500');
-                }
-            });
-
-            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
-            const activeNav = document.getElementById(`nav-${tabId}`);
-            if(activeNav) {
-                activeNav.classList.remove('text-gray-500');
-                activeNav.classList.add('text-rose-500');
-            }
+        function openModal(id) {
+            document.getElementById(id).classList.remove('hidden');
+            document.getElementById(id).classList.add('flex');
         }
 
-        function updateCalc() {
-            const val = document.getElementById('calc-slider').value;
-            document.getElementById('calc-amount').innerText = `$${val} USDT`;
-            document.getElementById('calc-daily').innerText = `+$${(val * 0.125).toFixed(2)}`;
-            document.getElementById('calc-monthly').innerText = `+$${(val * 3.75).toFixed(2)}`;
+        function closeModal(id) {
+            document.getElementById(id).classList.add('hidden');
+            document.getElementById(id).classList.remove('flex');
         }
 
-        function copyAddress() {
-            navigator.clipboard.writeText('TMCaiQ89XzNaP2x9001vK82mLa910pQ');
-            alert('تم نسخ عنوان الإيداع بنجاح!');
+        function copyWallet() {
+            const input = document.getElementById('walletAddress');
+            navigator.clipboard.writeText(input.value);
+            alert('تم نسخ عنوان المحفظة بنجاح!');
         }
-
-        // Live Fake Deposit Stream Simulation (FOMO Trigger)
-        const fakeUsers = ['User_7712', 'CryptoKing', 'Alex_MC', 'Trader_Leb', 'Ahmed_VIP'];
-        const fakeNodes = ['Alpha 1.0', 'Beta Ultra', 'Quantum Pro'];
-        const fakeAmounts = [30, 100, 300, 600];
-
-        setInterval(() => {
-            const u = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
-            const n = fakeNodes[Math.floor(Math.random() * fakeNodes.length)];
-            const a = fakeAmounts[Math.floor(Math.random() * fakeAmounts.length)];
-            const toast = document.getElementById('live-deposit-toast');
-            if(toast) {
-                toast.innerHTML = `
-                    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
-                        <i class="fa-solid fa-arrow-down-left"></i>
-                    </div>
-                    <div class="text-xs">
-                        <p class="font-bold text-gray-200">قام المستخدم <span class="text-amber-400">${u}</span> بتفعيل عقدة ${n}!</p>
-                        <p class="text-[10px] text-emerald-400 font-medium">إيداع ناجح: +$${a} USDT قبل بضع ثوانٍ</p>
-                    </div>
-                `;
-            }
-        }, 7000);
     </script>
 </body>
 </html>
