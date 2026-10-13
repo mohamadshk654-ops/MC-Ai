@@ -3,433 +3,254 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MC-Ai - منصة التحديد الكمي الذكية</title>
+    <title>MC-Ai Platform</title>
+    <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
+    <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f5f7; }
+        .active-tab { border-bottom: 3px solid #e11d48; color: #e11d48; font-weight: bold; }
+    </style>
 </head>
-<body class="bg-gray-950 text-gray-100 font-sans min-h-screen pb-24">
+<body class="pb-20 max-w-md mx-auto bg-gray-100 min-h-screen relative shadow-2xl">
 
-    <!-- قسم تسجيل الدخول / إنشاء الحساب (يظهر أولاً إن لم يتم تسجيل الدخول) -->
-    <div id="auth-section" class="fixed inset-0 bg-gray-950 z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-md w-full p-6 space-y-6 shadow-2xl">
-            <div class="text-center">
-                <h2 class="text-2xl font-black bg-gradient-to-r from-blue-400 to-indigo-500 bg-clip-text text-transparent">MC-Ai</h2>
-                <p class="text-xs text-gray-400 mt-1">منصة التحديد الكمي والاستثمار العالمي</p>
+    <!-- Header Section -->
+    <header class="bg-gradient-to-r from-rose-600 to-rose-700 text-white p-5 rounded-b-3xl shadow-lg relative">
+        <div class="flex justify-between items-center mb-4">
+            <div class="flex items-center space-x-2 space-x-reverse">
+                <div class="bg-white text-rose-600 font-black px-3 py-1.5 rounded-2xl shadow text-lg">MC</div>
+                <span class="text-xl font-extrabold tracking-wide">MC-Ai</span>
             </div>
-            
-            <div class="space-y-4">
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">البريد الإلكتروني أو رقم الهاتف (اختياري)</label>
-                    <input type="text" id="auth-identity" placeholder="name@example.com أو +963..." class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-xs text-white outline-none focus:border-blue-500">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">كلمة المرور</label>
-                    <input type="password" id="auth-pass" placeholder="••••••••" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-xs text-white outline-none focus:border-blue-500">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">تأكيد كلمة المرور</label>
-                    <input type="password" id="auth-pass-confirm" placeholder="••••••••" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-xs text-white outline-none focus:border-blue-500">
-                </div>
-                <div>
-                    <label class="block text-xs text-gray-400 mb-1">كود الإحالة (اختياري)</label>
-                    <input type="text" id="auth-ref" placeholder="REF-XXXX" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-3 text-xs text-white outline-none focus:border-blue-500">
-                </div>
-                <button onclick="handleAuth()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-3 rounded-xl font-semibold transition text-xs shadow-lg shadow-blue-600/30">تسجيل الدخول / إنشاء حساب جديد</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- نافذة الإعلان الترحيبي -->
-    <div id="welcome-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-blue-600 rounded-2xl max-w-md w-full p-6 text-center shadow-2xl relative">
-            <div class="w-14 h-14 bg-blue-600/20 rounded-full flex items-center justify-center mx-auto mb-3 text-blue-400 text-xl">
-                <i class="fa-solid fa-bullhorn"></i>
-            </div>
-            <h3 class="text-xl font-bold text-blue-400 mb-2">إعلان شركة MC-Ai</h3>
-            <p class="text-gray-300 text-xs mb-6 leading-relaxed">
-                مرحباً بك في منصة MC-Ai. نحن نضمن لك بيئة استثمارية آمنة وذكية للتحديد الكمي وتحقيق أرباح يومية مضمونة بثقة تامّة.
-            </p>
-            <button onclick="closeWelcomeModal()" class="w-full bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl font-semibold transition text-xs">إغلاق الإعلان</button>
-        </div>
-    </div>
-
-    <!-- الشريط العلوي (Header) -->
-    <header class="bg-gray-900/9ental backdrop-blur border-b border-gray-800 p-4 flex justify-between items-center sticky top-0 z-40">
-        <div class="flex items-center space-x-2 space-x-reverse">
-            <span class="text-lg font-bold text-blue-400">MC-Ai</span>
-            <i class="fa-solid fa-circle-check text-blue-500 text-xs" title="حساب موثق"></i>
-        </div>
-        <div class="flex items-center space-x-3 space-x-reverse">
-            <a href="https://t.me/your_telegram_support" target="_blank" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-blue-400 hover:bg-gray-700" title="دعم تلجرام">
-                <i class="fa-brands fa-telegram text-base"></i>
-            </a>
-            <button class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-300 hover:bg-gray-700 relative">
-                <i class="fa-regular fa-bell text-sm"></i>
-                <span class="absolute top-1.5 right-1.5 w-2 h-2 bg-red-500 rounded-full"></span>
+            <button class="bg-rose-800/60 hover:bg-rose-800 text-xs px-3 py-1.5 rounded-full flex items-center gap-1 border border-rose-400/30">
+                <i class="fa-solid fa-globe"></i> عربي <i class="fa-solid fa-chevron-down text-[10px]"></i>
             </button>
-            <button onclick="alert('تم تغيير اللغة إلى العربية')" class="w-8 h-8 bg-gray-800 rounded-full flex items-center justify-center text-gray-300 hover:bg-gray-700 text-[10px] font-bold">
-                AR
+        </div>
+
+        <!-- Notification Marquee -->
+        <div class="bg-rose-800/40 rounded-xl p-2.5 flex items-center gap-2 text-xs border border-rose-400/20">
+            <i class="fa-solid fa-bell text-yellow-300 animate-bounce"></i>
+            <marquee class="text-rose-100">مرحباً بك في منصة MC-Ai للذكاء الاصطناعي والمهام اليومية! قم بتحديث مستواك لزيادة الأرباح.</marquee>
+        </div>
+
+        <!-- Quick Action Buttons -->
+        <div class="grid grid-cols-2 gap-3 mt-5">
+            <button onclick="switchPage('deposit')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition">
+                <i class="fa-solid fa-wallet text-yellow-400"></i> إيداع
+            </button>
+            <button onclick="switchPage('withdraw')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition">
+                <i class="fa-solid fa-money-bill-transfer text-green-400"></i> سحب
             </button>
         </div>
     </header>
 
-    <!-- محتوى الصفحات المتعددة -->
-    <main class="max-w-md mx-auto p-4">
+    <!-- Main Content Containers -->
+    <main class="p-4">
 
-        <!-- 1. الصفحة الرئيسية -->
-        <div id="page-home" class="page-content space-y-4">
-            <div class="rounded-2xl overflow-hidden shadow-xl border border-gray-800 relative">
-                <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?auto=format&fit=crop&w=800&q=80" alt="فريق الشركة" class="w-full h-40 object-cover">
-                <div class="absolute inset-0 bg-gradient-to-t from-gray-950 via-gray-950/40 to-transparent flex items-end p-3">
-                    <span class="text-white font-bold text-xs">موظفو ومهندسو شركة MC-Ai</span>
-                </div>
+        <!-- TAB 1: HOME PAGE -->
+        <section id="page-home" class="space-y-4">
+            <!-- Action Grid -->
+            <div class="grid grid-cols-2 gap-3 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
+                <button class="flex items-center gap-3 p-2 bg-rose-50 rounded-xl text-rose-700 font-bold text-xs hover:bg-rose-100">
+                    <i class="fa-solid fa-circle-info text-lg"></i> معلومات عنّا
+                </button>
+                <button onclick="switchPage('team')" class="flex items-center gap-3 p-2 bg-blue-50 rounded-xl text-blue-700 font-bold text-xs hover:bg-blue-100">
+                    <i class="fa-solid fa-user-plus text-lg"></i> ادعُ الأصدقاء
+                </button>
+                <button class="flex items-center gap-3 p-2 bg-amber-50 rounded-xl text-amber-700 font-bold text-xs hover:bg-amber-100">
+                    <i class="fa-solid fa-handshake text-lg"></i> شراكة الوكلاء
+                </button>
+                <button onclick="switchPage('withdraw')" class="flex items-center gap-3 p-2 bg-emerald-50 rounded-xl text-emerald-700 font-bold text-xs hover:bg-emerald-100">
+                    <i class="fa-solid fa-arrow-up-from-bracket text-lg"></i> ينسحب
+                </button>
             </div>
 
-            <!-- رصيد الحساب -->
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 shadow">
-                <p class="text-gray-400 text-[11px] mb-1">إجمالي رصيد الحساب</p>
-                <h2 class="text-2xl font-black text-white mb-2" id="user-total-balance">$0.00</h2>
-                <div class="flex justify-between items-center text-[11px] text-gray-400 border-t border-gray-800 pt-2 mb-3">
-                    <span>الرصيد القابل للسحب (الأرباح فقط):</span>
-                    <span class="text-green-400 font-bold" id="user-withdrawable-balance">$0.00</span>
-                </div>
-                <div class="grid grid-cols-2 gap-2">
-                    <button onclick="openDepositModal()" class="bg-blue-600 hover:bg-blue-700 text-white py-2 rounded-xl font-semibold text-xs shadow">إيداع</button>
-                    <button onclick="openWithdrawModal()" class="bg-gray-800 hover:bg-gray-700 text-white py-2 rounded-xl font-semibold text-xs border border-gray-700">سحب الأرباح</button>
-                </div>
-            </div>
+            <!-- Task Hall Title -->
+            <h3 class="font-extrabold text-gray-800 text-base flex items-center gap-2">
+                <i class="fa-solid fa-layer-group text-rose-600"></i> قاعة المهام (MC-VIP)
+            </h3>
 
-            <!-- أسعار العملات -->
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-3">
-                <h3 class="text-[11px] font-semibold text-gray-400 mb-2">أسعار العملات الرقمية</h3>
-                <div class="grid grid-cols-3 gap-2 text-center">
-                    <div class="bg-gray-950 p-2 rounded-xl border border-gray-800"><span class="block text-[9px] text-gray-500">BTC</span><span class="text-xs font-bold text-green-400">$64,200</span></div>
-                    <div class="bg-gray-950 p-2 rounded-xl border border-gray-800"><span class="block text-[9px] text-gray-500">ETH</span><span class="text-xs font-bold text-green-400">$3,450</span></div>
-                    <div class="bg-gray-950 p-2 rounded-xl border border-gray-800"><span class="block text-[9px] text-gray-500">USDT</span><span class="text-xs font-bold text-green-400">$1.00</span></div>
-                </div>
-            </div>
-
-            <!-- جدول أثباتات سحب الأعضاء -->
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-3">
-                <h3 class="text-[11px] font-semibold text-gray-400 mb-2">أثباتات سحب الأعضاء الحية</h3>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right text-[11px]">
-                        <thead><tr class="border-b border-gray-800 text-gray-500"><th class="pb-1.5">المستخدم</th><th class="pb-1.5">المبلغ</th><th class="pb-1.5">الحالة</th></tr></thead>
-                        <tbody class="divide-y divide-gray-800 text-gray-300">
-                            <tr><td class="py-2">usr***91</td><td class="py-2 text-green-400 font-bold">+$150.00</td><td class="py-2 text-blue-400">مكتمل</td></tr>
-                            <tr><td class="py-2">usr***44</td><td class="py-2 text-green-400 font-bold">+$320.00</td><td class="py-2 text-blue-400">مكتمل</td></tr>
-                        </tbody>
-                    </table>
-                </div>
-            </div>
-        </div>
-
-        <!-- 2. صفحة التحديد الكمي -->
-        <div id="page-quant" class="page-content hidden space-y-4">
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 text-center space-y-3">
-                <h3 class="text-sm font-bold text-blue-400">نظام التحديد الكمي الذكي</h3>
-                <p class="text-xs text-gray-400">تتم عملية التحديد كل 24 ساعة بشرط إتمام الإيداع وتفعيل باقة الـ VIP.</p>
-                <div class="bg-gray-950 p-3 rounded-xl border border-gray-800 inline-block w-full">
-                    <span class="text-xs text-gray-400 block mb-1">حالة العداد (كل 24 ساعة):</span>
-                    <span id="timer-display" class="text-sm font-bold text-yellow-400">جاهز للتنفيذ</span>
-                </div>
-                <div class="bg-gray-800 p-2.5 rounded-xl text-xs font-semibold text-gray-200 border border-gray-700">
-                    المهام بدون تحكم (زر ثابت)
-                </div>
-                <div class="grid grid-cols-2 gap-2 pt-2">
-                    <button onclick="startTask()" class="bg-blue-600 hover:bg-blue-700 text-white py-2.5 rounded-xl text-xs font-bold shadow">المهمة</button>
-                    <button onclick="completeTask()" class="bg-green-600 hover:bg-green-700 text-white py-2.5 rounded-xl text-xs font-bold shadow">المهمة المكتملة</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 3. صفحة VIP -->
-        <div id="page-vip" class="page-content hidden space-y-3">
-            <h3 class="text-xs font-bold text-gray-300 mb-2">باقات الاستثمار والـ VIP</h3>
-            <div class="space-y-2.5" id="vip-packages-list">
-                <!-- الباقات من 10$ إلى 1000$ -->
-                <div class="bg-gray-900 border border-gray-800 rounded-xl p-3 flex justify-between items-center">
-                    <div><h4 class="text-xs font-bold text-yellow-400">VIP 1</h4><p class="text-[10px] text-gray-400">الاشتراك: 10$ - أرباح: 5% يومياً</p></div>
-                    <button onclick="subscribeVip(10, 5)" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-[11px]">اشتراك</button>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 rounded-xl p-3 flex justify-between items-center">
-                    <div><h4 class="text-xs font-bold text-yellow-400">VIP 2</h4><p class="text-[10px] text-gray-400">الاشتراك: 100$ - أرباح: 12% يومياً</p></div>
-                    <button onclick="subscribeVip(100, 12)" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-[11px]">اشتراك</button>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 rounded-xl p-3 flex justify-between items-center">
-                    <div><h4 class="text-xs font-bold text-yellow-400">VIP 3</h4><p class="text-[10px] text-gray-400">الاشتراك: 500$ - أرباح: 20% يومياً</p></div>
-                    <button onclick="subscribeVip(500, 20)" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-[11px]">اشتراك</button>
-                </div>
-                <div class="bg-gray-900 border border-gray-800 rounded-xl p-3 flex justify-between items-center">
-                    <div><h4 class="text-xs font-bold text-yellow-400">VIP 4</h4><p class="text-[10px] text-gray-400">الاشتراك: 1000$ - أرباح: 30% يومياً</p></div>
-                    <button onclick="subscribeVip(1000, 30)" class="bg-blue-600 text-white px-3 py-1.5 rounded-lg text-[11px]">اشتراك</button>
-                </div>
-            </div>
-        </div>
-
-        <!-- 4. صفحة الدعوة -->
-        <div id="page-invite" class="page-content hidden space-y-4">
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 text-center space-y-3">
-                <h3 class="text-xs font-bold text-blue-400">دعوة الأصدقاء والمكافآت</h3>
-                <p class="text-[11px] text-gray-400">شارك رابطك واحصل على مكافآت فورية عند إحالة أي مستخدم جديد.</p>
-                <div>
-                    <label class="block text-[10px] text-gray-500 mb-1">كود الدعوة الخاص بك</label>
-                    <input type="text" readonly value="MC-REF-9982" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2.5 text-center text-xs text-yellow-400 font-bold">
-                </div>
-                <div>
-                    <label class="block text-[10px] text-gray-500 mb-1">رابط الدعوة</label>
-                    <div class="flex items-center space-x-1 space-x-reverse bg-gray-950 border border-gray-800 rounded-xl p-2 text-xs">
-                        <input type="text" readonly value="https://mc-ai.app/ref=9982" class="bg-transparent w-full outline-none text-gray-300 text-[11px]">
-                        <button onclick="alert('تم نسخ رابط الدعوة!')" class="bg-blue-600 text-white px-3 py-1 rounded-lg text-[10px]">نسخ</button>
+            <!-- VIP Levels List -->
+            <div class="space-y-3">
+                <!-- VIP 1 -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-rose-500 to-rose-600 text-white flex items-center justify-center font-black text-lg shadow-md">
+                            VIP1
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-sm">مستوى MC-1</h4>
+                            <p class="text-xs text-gray-500">الربح اليومي: <span class="text-emerald-600 font-bold">1.00 USDT</span></p>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-bold">تم فتح القفل</span>
+                        <p class="text-xs text-rose-600 font-bold mt-1">$3.00 USDT</p>
                     </div>
                 </div>
-                <div class="bg-gray-950 p-3 rounded-xl border border-gray-800 text-right text-[11px]">
-                    <span class="text-gray-400 block mb-1">سجل مكافآت الإحالة:</span>
-                    <span class="text-green-400 font-bold">المكافآت المكتسبة: $0.00 (0 إحالات نشطة)</span>
-                </div>
-            </div>
-        </div>
 
-        <!-- 5. صفحة حسابي -->
-        <div id="page-profile" class="page-content hidden space-y-4">
-            <div class="bg-gray-900 border border-gray-800 rounded-2xl p-4 space-y-3">
-                <h3 class="text-xs font-bold text-gray-300 border-b border-gray-800 pb-2">معلومات الحساب الكاملة</h3>
-                <div class="text-xs space-y-2 text-gray-300">
-                    <p>البريد أو الهاتف: <span id="profile-identity" class="text-white font-semibold">غير محدد</span></p>
-                    <p>نوع الحساب: <span class="text-blue-400 font-semibold">عضو موثق</span></p>
-                    <p>باقة الـ VIP المفعلة: <span id="profile-vip-status" class="text-yellow-400 font-semibold">غير مشترك</span></p>
-                    <p>إجمالي الإيداعات: <span id="profile-total-dep" class="text-green-400 font-semibold">$0.00</span></p>
+                <!-- VIP 2 -->
+                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between opacity-80">
+                    <div class="flex items-center gap-3">
+                        <div class="w-12 h-12 rounded-xl bg-gray-200 text-gray-600 flex items-center justify-center font-black text-lg">
+                            <i class="fa-solid fa-lock text-base"></i>
+                        </div>
+                        <div>
+                            <h4 class="font-bold text-gray-800 text-sm">مستوى MC-2</h4>
+                            <p class="text-xs text-gray-500">الربح اليومي: <span class="text-emerald-600 font-bold">6.00 USDT</span></p>
+                        </div>
+                    </div>
+                    <div class="text-left">
+                        <button class="bg-rose-600 text-white text-xs px-3 py-1.5 rounded-xl font-bold shadow hover:bg-rose-700">افتح الآن</button>
+                        <p class="text-xs text-gray-500 font-bold mt-1">$18.00 USDT</p>
+                    </div>
                 </div>
-                <button onclick="logout()" class="w-full bg-red-600/20 hover:bg-red-600/30 text-red-400 border border-red-500/30 py-2.5 rounded-xl font-semibold transition text-xs mt-4">تسجيل الخروج</button>
             </div>
-        </div>
+        </section>
 
-        <!-- 6. صفحة إعدادات الأدمن (تظهر فقط للأدمن nnnnnaaatttnanooo@gmail.com) -->
-        <div id="page-admin" class="page-content hidden space-y-4">
-            <div class="bg-gray-900 border border-blue-600/50 rounded-2xl p-4 space-y-3">
-                <div class="flex justify-between items-center border-b border-gray-800 pb-2">
-                    <h3 class="text-xs font-bold text-blue-400"><i class="fa-solid fa-lock"></i> لوحة تحكم الأدمن الخاصة</h3>
-                    <span class="text-[10px] text-green-400">متصل (nnnnaaatttnanooo@gmail.com)</span>
-                </div>
-                <p class="text-[11px] text-gray-400">طلبات السحب والإيداع الواردة من المستخدمين الجدد:</p>
-                <div class="overflow-x-auto">
-                    <table class="w-full text-right text-[11px]">
-                        <thead><tr class="border-b border-gray-800 text-gray-500"><th class="pb-1.5">المستخدم</th><th class="pb-1.5">النوع</th><th class="pb-1.5">المبلغ</th><th class="pb-1.5">الشبكة</th><th class="pb-1.5">المحفظة / الإجراء</th></tr></thead>
-                        <tbody id="admin-requests-table" class="divide-y divide-gray-800 text-gray-300">
-                            <!-- يتم تعبئة الطلبات برمجياً هنا وإرسالها فوراً لبريدك -->
-                        </tbody>
-                    </table>
+        <!-- TAB 2: TASKS PAGE -->
+        <section id="page-tasks" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm text-center">
+                <p class="text-xs text-gray-500">الرصيد الإجمالي</p>
+                <h2 class="text-2xl font-black text-gray-800 mt-1">0.00 <span class="text-xs text-rose-600">USDT</span></h2>
+            </div>
+            
+            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
+                <img src="https://via.placeholder.com/300x150" alt="Task Item" class="w-full h-32 object-cover rounded-xl">
+                <div class="flex justify-between items-center">
+                    <div>
+                        <h4 class="font-bold text-xs text-gray-800">مهمة معالجة البيانات MC-Ai #101</h4>
+                        <p class="text-xs text-emerald-600 font-bold mt-0.5">الأرباح: +1.00 USDT</p>
+                    </div>
+                    <button class="bg-rose-600 text-white text-xs px-4 py-2 rounded-xl font-bold shadow hover:bg-rose-700">أكمل المهمة</button>
                 </div>
             </div>
-        </div>
+        </section>
+
+        <!-- TAB 3: TEAM / REFERRAL PAGE -->
+        <section id="page-team" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
+                <span class="text-xs text-gray-500 font-bold">رمز الدعوة الخاص بك:</span>
+                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-200">
+                    <span class="font-black text-lg text-rose-600 tracking-widest">MC-88902</span>
+                    <button class="bg-rose-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold">نسخ</button>
+                </div>
+            </div>
+
+            <!-- Commission Levels -->
+            <div class="grid grid-cols-3 gap-2">
+                <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl text-center">
+                    <p class="text-[10px] text-indigo-600 font-bold">مستوى 1</p>
+                    <p class="text-sm font-black text-indigo-900 mt-1">13%</p>
+                    <p class="text-[9px] text-gray-500 mt-0.5">عمولة الإحالة</p>
+                </div>
+                <div class="bg-purple-50 border border-purple-100 p-3 rounded-2xl text-center">
+                    <p class="text-[10px] text-purple-600 font-bold">مستوى 2</p>
+                    <p class="text-sm font-black text-purple-900 mt-1">2%</p>
+                    <p class="text-[9px] text-gray-500 mt-0.5">عمولة الإحالة</p>
+                </div>
+                <div class="bg-pink-50 border border-pink-100 p-3 rounded-2xl text-center">
+                    <p class="text-[10px] text-pink-600 font-bold">مستوى 3</p>
+                    <p class="text-sm font-black text-pink-900 mt-1">1%</p>
+                    <p class="text-[9px] text-gray-500 mt-0.5">عمولة الإحالة</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- TAB 4: PROFILE PAGE -->
+        <section id="page-profile" class="hidden space-y-4">
+            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
+                <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-xl">
+                    <i class="fa-solid fa-user"></i>
+                </div>
+                <div>
+                    <h4 class="font-bold text-sm text-gray-800">مستخدم MC-Ai</h4>
+                    <p class="text-xs text-gray-400">user@mc-ai.com</p>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-2xl shadow-sm divide-y divide-gray-100 border border-gray-100">
+                <a href="#" class="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 hover:bg-gray-50 rounded-t-2xl">
+                    <span><i class="fa-solid fa-key text-rose-500 w-5"></i> تغيير كلمة المرور</span>
+                    <i class="fa-solid fa-chevron-left text-gray-400"></i>
+                </a>
+                <a href="#" class="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 hover:bg-gray-50">
+                    <span><i class="fa-solid fa-clock-rotate-left text-rose-500 w-5"></i> سجل المالي</span>
+                    <i class="fa-solid fa-chevron-left text-gray-400"></i>
+                </a>
+                <a href="#" class="p-3.5 flex justify-between items-center text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-b-2xl">
+                    <span><i class="fa-solid fa-right-from-bracket w-5"></i> تسجيل الخروج</span>
+                    <i class="fa-solid fa-chevron-left text-rose-400"></i>
+                </a>
+            </div>
+        </section>
+
+        <!-- DEPOSIT PAGE (MODAL-LIKE) -->
+        <section id="page-deposit" class="hidden space-y-4">
+            <h3 class="font-bold text-gray-800 text-sm">اختر شبكة الإيداع (Crypto Network):</h3>
+            <div class="bg-white rounded-2xl divide-y divide-gray-100 shadow-sm border border-gray-100 text-xs">
+                <div class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+                    <span class="font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-coins text-emerald-500"></i> TRC20-USDT</span>
+                    <i class="fa-solid fa-chevron-left text-gray-300"></i>
+                </div>
+                <div class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
+                    <span class="font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-coins text-yellow-500"></i> BEP20-USDT</span>
+                    <i class="fa-solid fa-chevron-left text-gray-300"></i>
+                </div>
+            </div>
+            <button onclick="switchPage('home')" class="w-full bg-gray-200 text-gray-700 py-2.5 rounded-xl text-xs font-bold">العودة للرئيسية</button>
+        </section>
 
     </main>
 
-    <!-- شريط التنقل السفلي -->
-    <nav class="fixed bottom-0 left-0 right-0 bg-gray-900/95 backdrop-blur border-t border-gray-800 flex justify-around p-2.5 z-40 text-[10px]">
-        <button onclick="switchPage('home', this)" class="nav-btn text-blue-500 flex flex-col items-center space-y-1"><i class="fa-solid fa-house text-sm"></i><span>الرئيسية</span></button>
-        <button onclick="switchPage('quant', this)" class="nav-btn text-gray-400 hover:text-white flex flex-col items-center space-y-1"><i class="fa-solid fa-chart-line text-sm"></i><span>التحديد الكمي</span></button>
-        <button onclick="switchPage('vip', this)" class="nav-btn text-gray-400 hover:text-white flex flex-col items-center space-y-1"><i class="fa-solid fa-crown text-sm text-yellow-500"></i><span>VIP</span></button>
-        <button onclick="switchPage('invite', this)" class="nav-btn text-gray-400 hover:text-white flex flex-col items-center space-y-1"><i class="fa-solid fa-users text-sm"></i><span>الدعوة</span></button>
-        <button onclick="switchPage('profile', this)" class="nav-btn text-gray-400 hover:text-white flex flex-col items-center space-y-1"><i class="fa-solid fa-user text-sm"></i><span>حسابي</span></button>
-        <button id="admin-nav-btn" onclick="switchPage('admin', this)" class="nav-btn hidden text-red-400 hover:text-red-300 flex flex-col items-center space-y-1"><i class="fa-solid fa-shield-halved text-sm"></i><span>الأدمن</span></button>
+    <!-- Bottom Navigation Bar -->
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-200 px-4 py-2 flex justify-around items-center z-50">
+        <button onclick="switchPage('home')" id="nav-home" class="flex flex-col items-center text-rose-600">
+            <i class="fa-solid fa-house text-lg"></i>
+            <span class="text-[10px] font-bold mt-1">الرئيسية</span>
+        </button>
+        <button onclick="switchPage('tasks')" id="nav-tasks" class="flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-list-check text-lg"></i>
+            <span class="text-[10px] font-bold mt-1">المهام</span>
+        </button>
+        <button onclick="switchPage('team')" id="nav-team" class="flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-users text-lg"></i>
+            <span class="text-[10px] font-bold mt-1">الفريق</span>
+        </button>
+        <button onclick="switchPage('profile')" id="nav-profile" class="flex flex-col items-center text-gray-400">
+            <i class="fa-solid fa-user text-lg"></i>
+            <span class="text-[10px] font-bold mt-1">حسابي</span>
+        </button>
     </nav>
 
-    <!-- نافذة الإيداع -->
-    <div id="deposit-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-md w-full p-5 space-y-3">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-2"><h3 class="font-bold text-white text-xs">إيداع رصيد (أقل إيداع 1$)</h3><button onclick="closeDepositModal()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>
-            <div>
-                <label class="block text-[10px] text-gray-400 mb-1">اختر شبكة الإيداع (3 شبكات)</label>
-                <select id="dep-network" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2 text-xs text-white">
-                    <option>USDT (TRC20)</option>
-                    <option>USDT (BEP20)</option>
-                    <option>TRX (Tron)</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-[10px] text-gray-400 mb-1">كود وعنوان المحفظة (نسخ)</label>
-                <div class="flex items-center space-x-1 space-x-reverse bg-gray-950 border border-gray-800 rounded-xl p-2 text-xs">
-                    <input type="text" readonly value="TXYZabc123456789WalletMCaiAdmin" id="dep-wallet-code" class="bg-transparent w-full outline-none text-blue-400 text-[11px]">
-                    <button onclick="copyDepositCode()" class="bg-blue-600 text-white px-2.5 py-1 rounded-lg text-[10px]">نسخ</button>
-                </div>
-            </div>
-            <div>
-                <label class="block text-[10px] text-gray-400 mb-1">كمية الإيداع (الحد الأدنى 1$)</label>
-                <input type="number" id="dep-amount" min="1" placeholder="50" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2 text-xs text-white outline-none">
-            </div>
-            <button onclick="submitDeposit()" class="w-full bg-blue-600 text-white py-2.5 rounded-xl font-semibold text-xs">تأكيد وإرسال للإدارة فوراً</button>
-        </div>
-    </div>
-
-    <!-- نافذة السحب (الأرباح فقط) -->
-    <div id="withdraw-modal" class="hidden fixed inset-0 bg-black/80 z-50 flex items-center justify-center p-4">
-        <div class="bg-gray-900 border border-gray-800 rounded-2xl max-w-md w-full p-5 space-y-3">
-            <div class="flex justify-between items-center border-b border-gray-800 pb-2"><h3 class="font-bold text-white text-xs">سحب الأرباح (رأس المال محمي ولا يُسحب)</h3><button onclick="closeWithdrawModal()" class="text-gray-400"><i class="fa-solid fa-xmark"></i></button></div>
-            <div>
-                <label class="block text-[10px] text-gray-400 mb-1">اختر شبكة السحب (3 شبكات)</label>
-                <select id="wit-network" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2 text-xs text-white">
-                    <option>USDT (TRC20)</option>
-                    <option>USDT (BEP20)</option>
-                    <option>TRX (Tron)</option>
-                </select>
-            </div>
-            <div>
-                <label class="block text-[10px] text-gray-400 mb-1">عنوان محفظتك للسحب</label>
-                <input type="text" id="wit-address" placeholder="أدخل عنوان محفظتك الشخصية..." class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2 text-xs text-white outline-none">
-            </div>
-            <div>
-                <label class="block text-[10px] text-gray-400 mb-1">كمية السحب (من الأرباح المتاحة فقط)</label>
-                <input type="number" id="wit-amount" placeholder="20" class="w-full bg-gray-950 border border-gray-800 rounded-xl p-2 text-xs text-white outline-none">
-            </div>
-            <button onclick="submitWithdraw()" class="w-full bg-green-600 text-white py-2.5 rounded-xl font-semibold text-xs">إرسال طلب السحب للإدارة فوراً</button>
-        </div>
-    </div>
-
+    <!-- Navigation JS Handler -->
     <script>
-        let currentUser = {
-            identity: '',
-            balance: 0,
-            withdrawable: 0,
-            vipActive: false,
-            vipLevel: 'غير مشترك',
-            deposited: false
-        };
-
-        // إدارة المصادقة وتسجيل الدخول
-        function handleAuth() {
-            const identity = document.getElementById('auth-identity').value.trim();
-            const pass = document.getElementById('auth-pass').value;
-            const passConfirm = document.getElementById('auth-pass-confirm').value;
-
-            if(!pass || pass !== passConfirm) {
-                alert('يرجى التأكد من تطابق كلمة المرور!');
-                return;
-            }
-
-            currentUser.identity = identity || 'مستخدم عام';
-            document.getElementById('profile-identity').innerText = currentUser.identity;
-            document.getElementById('auth-section').style.display = 'none';
-            document.getElementById('welcome-modal').style.display = 'flex';
-
-            // التحقق مما إذا كان المستخدم هو الأدمن
-            if(identity === 'nnnnnaaatttnanooo@gmail.com') {
-                document.getElementById('admin-nav-btn').classList.remove('hidden');
-                alert('مرحباً بك يا أدمن! تم تفعيل لوحة التحكم الخاصة بك.');
-            }
-        }
-
-        function closeWelcomeModal() {
-            document.getElementById('welcome-modal').style.display = 'none';
-        }
-
-        function logout() {
-            currentUser = { identity: '', balance: 0, withdrawable: 0, vipActive: false, vipLevel: 'غير مشترك', deposited: false };
-            document.getElementById('auth-section').style.display = 'flex';
-            document.getElementById('admin-nav-btn').classList.add('hidden');
-            switchPage('home', document.querySelector('.nav-btn'));
-        }
-
-        // التنقل بين الصفحات
-        function switchPage(pageId, btn) {
-            document.querySelectorAll('.page-content').forEach(p => p.classList.add('hidden'));
-            document.getElementById('page-' + pageId).classList.remove('hidden');
-            document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('text-blue-500'));
-            btn.classList.add('text-blue-500');
-        }
-
-        // نوافذ الإيداع والسحب
-        function openDepositModal() { document.getElementById('deposit-modal').style.display = 'flex'; }
-        function closeDepositModal() { document.getElementById('deposit-modal').style.display = 'none'; }
-        function openWithdrawModal() { document.getElementById('withdraw-modal').style.display = 'flex'; }
-        function closeWithdrawModal() { document.getElementById('withdraw-modal').style.display = 'none'; }
-        function copyDepositCode() { alert('تم نسخ كود وعنوان الإيداع بنجاح!'); }
-
-        // تقديم طلب الإيداع (إشعار الأدمن فوراً nnnnaaatttnanooo@gmail.com)
-        function submitDeposit() {
-            const amount = parseFloat(document.getElementById('dep-amount').value);
-            const net = document.getElementById('dep-network').value;
-            if(!amount || amount < 1) { alert('الحد الأدنى للإيداع هو 1$'); return; }
-
-            currentUser.deposited = true;
-            currentUser.balance += amount;
-            document.getElementById('user-total-balance').innerText = '$' + currentUser.balance.toFixed(2);
-            document.getElementById('profile-total-dep').innerText = '$' + currentUser.balance.toFixed(2);
-
-            addAdminRequest('إيداع', amount, net, 'تم التوليد (ناجح)');
-            alert(`تم إرسال طلب الإيداع بقيمة $${amount} وإشعار الأدمن (nnnnaaatttnanooo@gmail.com) فوراً.`);
-            closeDepositModal();
-        }
-
-        // تقديم طلب السحب (الأرباح فقط)
-        function submitWithdraw() {
-            const amount = parseFloat(document.getElementById('wit-amount').value);
-            const net = document.getElementById('wit-network').value;
-            const addr = document.getElementById('wit-address').value.trim();
-
-            if(!currentUser.deposited || !currentUser.vipActive) {
-                alert('عذراً، لا يمكنك السحب إلا بعد الإيداع وتفعيل باقة VIP!');
-                return;
-            }
-            if(!amount || amount > currentUser.withdrawable) {
-                alert('المبلغ المطلوب أكبر من الأرباح القابلة للسحب (رأس المال محمي ولا يُسحب)!');
-                return;
-            }
-            if(!addr) { alert('يرجى أدخال عنوان محفظتك!'); return; }
-
-            currentUser.withdrawable -= amount;
-            document.getElementById('user-withdrawable-balance').innerText = '$' + currentUser.withdrawable.toFixed(2);
-
-            addAdminRequest('سحب أرباح', amount, net, addr);
-            alert(`تم إرسال طلب سحب الأرباح بقيمة $${amount} وإشعار الأدمن (nnnnaaatttnanooo@gmail.com) فوراً.`);
-            closeWithdrawModal();
-        }
-
-        // تفعيل باقة الـ VIP
-        function subscribeVip(price, profitPercent) {
-            if(currentUser.balance < price) {
-                alert('رصيدك غير كافٍ! يرجى عمل إيداع أولاً.');
-                openDepositModal();
-                return;
-            }
-            currentUser.vipActive = true;
-            currentUser.vipLevel = `VIP (${price}$ - أرباح ${profitPercent}%)`;
-            // توليد أرباح تجريبية قابلة للسحب
-            currentUser.withdrawable += (price * profitPercent) / 100;
+        function switchPage(pageId) {
+            const pages = ['home', 'tasks', 'team', 'profile', 'deposit'];
+            pages.forEach(p => {
+                const el = document.getElementById(`page-${p}`);
+                if (el) el.classList.add('hidden');
+            });
             
-            document.getElementById('profile-vip-status').innerText = currentUser.vipLevel;
-            document.getElementById('user-withdrawable-balance').innerText = '$' + currentUser.withdrawable.toFixed(2);
-            alert(`تم الاشتراك بنجاح في الباقة وإضافة الأرباح المتاحة للسحب!`);
-        }
+            const targetPage = document.getElementById(`page-${pageId}`);
+            if (targetPage) targetPage.classList.remove('hidden');
 
-        // مهام التحديد الكمي (كل 24 ساعة بشرط الإيداع والـ VIP)
-        function startTask() {
-            if(!currentUser.deposited || !currentUser.vipActive) {
-                alert('عذراً، لا يمكن بدء المهام إلا بعد الإيداع وتفعيل باقة VIP!');
-                return;
+            // Reset navigation tab colors
+            const navs = ['home', 'tasks', 'team', 'profile'];
+            navs.forEach(n => {
+                const navBtn = document.getElementById(`nav-${n}`);
+                if (navBtn) {
+                    navBtn.classList.remove('text-rose-600');
+                    navBtn.classList.add('text-gray-400');
+                }
+            });
+
+            // Highlight active nav
+            const activeNav = document.getElementById(`nav-${pageId}`);
+            if (activeNav) {
+                activeNav.classList.remove('text-gray-400');
+                activeNav.classList.add('text-rose-600');
             }
-            document.getElementById('timer-display').innerText = 'جاري تنفيذ التحديد الكمي الذكي...';
-            setTimeout(() => {
-                document.getElementById('timer-display').innerText = 'تم إنجاز المهمة بنجاح! انتظر 24 ساعة للمهمة القادمة.';
-            }, 2000);
-        }
-
-        function completeTask() {
-            alert('تم تأكيد المهمة المكتملة وإضافة نسبة الربح اليومي لرصيد أرباحك القابل للسحب.');
-        }
-
-        // إضافة الطلبات إلى جدول الأدمن وإشعار البريد nnnnaaatttnanooo@gmail.com
-        function addAdminRequest(type, amount, network, details) {
-            const table = document.getElementById('admin-requests-table');
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                <td class="py-2">${currentUser.identity}</td>
-                <td class="py-2 text-blue-400 font-bold">${type}</td>
-                <td class="py-2 text-green-400 font-bold">$${amount}</td>
-                <td class="py-2">${network}</td>
-                <td class="py-2"><span class="bg-gray-800 px-2 py-1 rounded text-[10px] text-yellow-300 select-all">${details}</span></td>
-            `;
-            table.prepend(row);
         }
     </script>
 </body>
