@@ -3,255 +3,376 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MC-Ai Platform</title>
+    <title>MC-Ai | Next-Gen AI Computation Hub</title>
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     <!-- FontAwesome Icons -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;800;900&family=Tajawal:wght@400;700;900&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: system-ui, -apple-system, sans-serif; background-color: #f4f5f7; }
-        .active-tab { border-bottom: 3px solid #e11d48; color: #e11d48; font-weight: bold; }
+        * { font-family: 'Tajawal', sans-serif; }
+        .bg-mesh {
+            background-color: #0b0f19;
+            background-image: 
+                radial-gradient(at 0% 0%, rgba(225, 29, 72, 0.15) 0px, transparent 50%),
+                radial-gradient(at 100% 100%, rgba(99, 102, 241, 0.15) 0px, transparent 50%),
+                radial-gradient(at 50% 50%, rgba(16, 185, 129, 0.05) 0px, transparent 50%);
+        }
+        .glass-card {
+            background: rgba(18, 24, 38, 0.75);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+        }
+        .glass-card-hover:hover {
+            border-color: rgba(225, 29, 72, 0.4);
+            box-shadow: 0 10px 30px -10px rgba(225, 29, 72, 0.3);
+            transform: translateY(-2px);
+        }
+        .neon-glow {
+            box-shadow: 0 0 20px rgba(225, 29, 72, 0.4);
+        }
+        .geometric-grid {
+            background-size: 30px 30px;
+            background-image: linear-gradient(to right, rgba(255, 255, 255, 0.02) 1px, transparent 1px),
+                              linear-gradient(to bottom, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+        }
     </style>
 </head>
-<body class="pb-20 max-w-md mx-auto bg-gray-100 min-h-screen relative shadow-2xl">
+<body class="bg-mesh geometric-grid text-gray-100 min-h-screen pb-24 max-w-md mx-auto relative border-x border-gray-800/50 shadow-2xl overflow-x-hidden">
 
-    <!-- Header Section -->
-    <header class="bg-gradient-to-r from-rose-600 to-rose-700 text-white p-5 rounded-b-3xl shadow-lg relative">
-        <div class="flex justify-between items-center mb-4">
-            <div class="flex items-center space-x-2 space-x-reverse">
-                <div class="bg-white text-rose-600 font-black px-3 py-1.5 rounded-2xl shadow text-lg">MC</div>
-                <span class="text-xl font-extrabold tracking-wide">MC-Ai</span>
+    <!-- Top Floating Header -->
+    <header class="p-4 sticky top-0 z-40 bg-opacity-80 backdrop-blur-md bg-[#0b0f19] border-b border-gray-800/60 flex justify-between items-center">
+        <div class="flex items-center space-x-3 space-x-reverse">
+            <div class="w-10 h-10 rounded-xl bg-gradient-to-tr from-rose-600 via-rose-500 to-amber-500 flex items-center justify-center font-black text-white text-xl shadow-lg neon-glow">
+                MC
             </div>
-            <button class="bg-rose-800/60 hover:bg-rose-800 text-xs px-3 py-1.5 rounded-full flex items-center gap-1 border border-rose-400/30">
-                <i class="fa-solid fa-globe"></i> عربي <i class="fa-solid fa-chevron-down text-[10px]"></i>
-            </button>
+            <div>
+                <h1 class="font-black text-lg tracking-wider text-white leading-tight">MC-Ai <span class="text-xs px-2 py-0.5 rounded-full bg-rose-500/20 text-rose-400 border border-rose-500/30">PRO</span></h1>
+                <p class="text-[10px] text-gray-400 font-medium">الشبكة الكمومية للذكاء الاصطناعي</p>
+            </div>
         </div>
-
-        <!-- Notification Marquee -->
-        <div class="bg-rose-800/40 rounded-xl p-2.5 flex items-center gap-2 text-xs border border-rose-400/20">
-            <i class="fa-solid fa-bell text-yellow-300 animate-bounce"></i>
-            <marquee class="text-rose-100">مرحباً بك في منصة MC-Ai للذكاء الاصطناعي والمهام اليومية! قم بتحديث مستواك لزيادة الأرباح.</marquee>
-        </div>
-
-        <!-- Quick Action Buttons -->
-        <div class="grid grid-cols-2 gap-3 mt-5">
-            <button onclick="switchPage('deposit')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition">
-                <i class="fa-solid fa-wallet text-yellow-400"></i> إيداع
-            </button>
-            <button onclick="switchPage('withdraw')" class="bg-white/10 hover:bg-white/20 backdrop-blur-md border border-white/20 py-2.5 rounded-xl font-bold text-sm flex items-center justify-center gap-2 shadow-sm transition">
-                <i class="fa-solid fa-money-bill-transfer text-green-400"></i> سحب
-            </button>
-        </div>
+        <button onclick="switchTab('deposit')" class="bg-gradient-to-r from-rose-600 to-amber-600 hover:from-rose-500 hover:to-amber-500 text-white font-bold text-xs px-4 py-2 rounded-xl shadow-lg transition duration-200 flex items-center gap-1.5 border border-rose-400/30">
+            <i class="fa-solid fa-bolt text-yellow-300 animate-pulse"></i> إيداع سريع
+        </button>
     </header>
 
-    <!-- Main Content Containers -->
-    <main class="p-4">
+    <!-- Main Dynamic Content -->
+    <main class="p-4 space-y-5">
 
-        <!-- TAB 1: HOME PAGE -->
-        <section id="page-home" class="space-y-4">
-            <!-- Action Grid -->
-            <div class="grid grid-cols-2 gap-3 bg-white p-4 rounded-2xl shadow-sm border border-gray-100">
-                <button class="flex items-center gap-3 p-2 bg-rose-50 rounded-xl text-rose-700 font-bold text-xs hover:bg-rose-100">
-                    <i class="fa-solid fa-circle-info text-lg"></i> معلومات عنّا
-                </button>
-                <button onclick="switchPage('team')" class="flex items-center gap-3 p-2 bg-blue-50 rounded-xl text-blue-700 font-bold text-xs hover:bg-blue-100">
-                    <i class="fa-solid fa-user-plus text-lg"></i> ادعُ الأصدقاء
-                </button>
-                <button class="flex items-center gap-3 p-2 bg-amber-50 rounded-xl text-amber-700 font-bold text-xs hover:bg-amber-100">
-                    <i class="fa-solid fa-handshake text-lg"></i> شراكة الوكلاء
-                </button>
-                <button onclick="switchPage('withdraw')" class="flex items-center gap-3 p-2 bg-emerald-50 rounded-xl text-emerald-700 font-bold text-xs hover:bg-emerald-100">
-                    <i class="fa-solid fa-arrow-up-from-bracket text-lg"></i> ينسحب
-                </button>
-            </div>
-
-            <!-- Task Hall Title -->
-            <h3 class="font-extrabold text-gray-800 text-base flex items-center gap-2">
-                <i class="fa-solid fa-layer-group text-rose-600"></i> قاعة المهام (MC-VIP)
-            </h3>
-
-            <!-- VIP Levels List -->
-            <div class="space-y-3">
-                <!-- VIP 1 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-xl bg-gradient-to-tr from-rose-500 to-rose-600 text-white flex items-center justify-center font-black text-lg shadow-md">
-                            VIP1
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-sm">مستوى MC-1</h4>
-                            <p class="text-xs text-gray-500">الربح اليومي: <span class="text-emerald-600 font-bold">1.00 USDT</span></p>
-                        </div>
-                    </div>
-                    <div class="text-left">
-                        <span class="bg-emerald-100 text-emerald-700 text-xs px-2.5 py-1 rounded-full font-bold">تم فتح القفل</span>
-                        <p class="text-xs text-rose-600 font-bold mt-1">$3.00 USDT</p>
-                    </div>
-                </div>
-
-                <!-- VIP 2 -->
-                <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center justify-between opacity-80">
-                    <div class="flex items-center gap-3">
-                        <div class="w-12 h-12 rounded-xl bg-gray-200 text-gray-600 flex items-center justify-center font-black text-lg">
-                            <i class="fa-solid fa-lock text-base"></i>
-                        </div>
-                        <div>
-                            <h4 class="font-bold text-gray-800 text-sm">مستوى MC-2</h4>
-                            <p class="text-xs text-gray-500">الربح اليومي: <span class="text-emerald-600 font-bold">6.00 USDT</span></p>
-                        </div>
-                    </div>
-                    <div class="text-left">
-                        <button class="bg-rose-600 text-white text-xs px-3 py-1.5 rounded-xl font-bold shadow hover:bg-rose-700">افتح الآن</button>
-                        <p class="text-xs text-gray-500 font-bold mt-1">$18.00 USDT</p>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 2: TASKS PAGE -->
-        <section id="page-tasks" class="hidden space-y-4">
-            <div class="bg-white p-4 rounded-2xl shadow-sm text-center">
-                <p class="text-xs text-gray-500">الرصيد الإجمالي</p>
-                <h2 class="text-2xl font-black text-gray-800 mt-1">0.00 <span class="text-xs text-rose-600">USDT</span></h2>
-            </div>
+        <!-- TAB 1: HOME -->
+        <div id="tab-home" class="space-y-5">
             
-            <div class="bg-white rounded-2xl p-4 shadow-sm border border-gray-100 space-y-3">
-                <img src="https://via.placeholder.com/300x150" alt="Task Item" class="w-full h-32 object-cover rounded-xl">
-                <div class="flex justify-between items-center">
-                    <div>
-                        <h4 class="font-bold text-xs text-gray-800">مهمة معالجة البيانات MC-Ai #101</h4>
-                        <p class="text-xs text-emerald-600 font-bold mt-0.5">الأرباح: +1.00 USDT</p>
+            <!-- Hero Investment Banner -->
+            <div class="glass-card rounded-3xl p-5 relative overflow-hidden border border-rose-500/20">
+                <div class="absolute -left-10 -bottom-10 w-36 h-36 bg-rose-600/20 rounded-full blur-2xl"></div>
+                <div class="relative z-10 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <span class="bg-rose-500/10 text-rose-400 text-[11px] font-bold px-3 py-1 rounded-full border border-rose-500/20">
+                            🔥 باقة الاستثمار الأكثر إنتاجية
+                        </span>
+                        <span class="text-xs text-gray-400"><i class="fa-solid fa-shield-halved text-emerald-400"></i> حماية 100%</span>
                     </div>
-                    <button class="bg-rose-600 text-white text-xs px-4 py-2 rounded-xl font-bold shadow hover:bg-rose-700">أكمل المهمة</button>
-                </div>
-            </div>
-        </section>
+                    <h2 class="text-xl font-black text-white">ضخ استثمارك في خوادم <span class="text-transparent bg-clip-text bg-gradient-to-r from-rose-400 to-amber-300">MC-Quantum</span></h2>
+                    <p class="text-xs text-gray-300 leading-relaxed">
+                        اختر إحدى عقد الحوسبة اليومية وابدأ بتحصيل العوائد السريعة عبر تقنية معالجة البيانات الكمية.
+                    </p>
 
-        <!-- TAB 3: TEAM / REFERRAL PAGE -->
-        <section id="page-team" class="hidden space-y-4">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 space-y-3">
-                <span class="text-xs text-gray-500 font-bold">رمز الدعوة الخاص بك:</span>
-                <div class="flex justify-between items-center bg-gray-50 p-3 rounded-xl border border-gray-200">
-                    <span class="font-black text-lg text-rose-600 tracking-widest">MC-88902</span>
-                    <button class="bg-rose-600 text-white text-xs px-3 py-1.5 rounded-lg font-bold">نسخ</button>
-                </div>
-            </div>
-
-            <!-- Commission Levels -->
-            <div class="grid grid-cols-3 gap-2">
-                <div class="bg-indigo-50 border border-indigo-100 p-3 rounded-2xl text-center">
-                    <p class="text-[10px] text-indigo-600 font-bold">مستوى 1</p>
-                    <p class="text-sm font-black text-indigo-900 mt-1">13%</p>
-                    <p class="text-[9px] text-gray-500 mt-0.5">عمولة الإحالة</p>
-                </div>
-                <div class="bg-purple-50 border border-purple-100 p-3 rounded-2xl text-center">
-                    <p class="text-[10px] text-purple-600 font-bold">مستوى 2</p>
-                    <p class="text-sm font-black text-purple-900 mt-1">2%</p>
-                    <p class="text-[9px] text-gray-500 mt-0.5">عمولة الإحالة</p>
-                </div>
-                <div class="bg-pink-50 border border-pink-100 p-3 rounded-2xl text-center">
-                    <p class="text-[10px] text-pink-600 font-bold">مستوى 3</p>
-                    <p class="text-sm font-black text-pink-900 mt-1">1%</p>
-                    <p class="text-[9px] text-gray-500 mt-0.5">عمولة الإحالة</p>
-                </div>
-            </div>
-        </section>
-
-        <!-- TAB 4: PROFILE PAGE -->
-        <section id="page-profile" class="hidden space-y-4">
-            <div class="bg-white p-4 rounded-2xl shadow-sm border border-gray-100 flex items-center gap-3">
-                <div class="w-12 h-12 rounded-full bg-rose-100 text-rose-600 flex items-center justify-center font-bold text-xl">
-                    <i class="fa-solid fa-user"></i>
-                </div>
-                <div>
-                    <h4 class="font-bold text-sm text-gray-800">مستخدم MC-Ai</h4>
-                    <p class="text-xs text-gray-400">user@mc-ai.com</p>
+                    <!-- Realtime Statistics Counter -->
+                    <div class="grid grid-cols-2 gap-2 pt-2 border-t border-gray-800/80">
+                        <div>
+                            <p class="text-[10px] text-gray-400">إجمالي الأرباح الموزعة</p>
+                            <p class="text-sm font-extrabold text-emerald-400">$1,482,910 USDT</p>
+                        </div>
+                        <div>
+                            <p class="text-[10px] text-gray-400">عقد المعالجة النشطة</p>
+                            <p class="text-sm font-extrabold text-amber-400">18,420 عقدة</p>
+                        </div>
+                    </div>
                 </div>
             </div>
 
-            <div class="bg-white rounded-2xl shadow-sm divide-y divide-gray-100 border border-gray-100">
-                <a href="#" class="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 hover:bg-gray-50 rounded-t-2xl">
-                    <span><i class="fa-solid fa-key text-rose-500 w-5"></i> تغيير كلمة المرور</span>
-                    <i class="fa-solid fa-chevron-left text-gray-400"></i>
+            <!-- Profit Calculator Widget -->
+            <div class="glass-card rounded-2xl p-4 space-y-3 border border-indigo-500/20">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-bold text-xs text-gray-200 flex items-center gap-2">
+                        <i class="fa-solid fa-calculator text-indigo-400"></i> حاسبة الأرباح التقديرية
+                    </h3>
+                    <span class="text-[10px] bg-indigo-500/20 text-indigo-300 px-2 py-0.5 rounded-md">تحديث حي</span>
+                </div>
+                <div class="space-y-1">
+                    <div class="flex justify-between text-xs font-bold">
+                        <span class="text-gray-400">مبلغ الإيداع:</span>
+                        <span id="calc-amount" class="text-amber-400 font-extrabold">$100 USDT</span>
+                    </div>
+                    <input type="range" min="20" max="1000" step="10" value="100" id="calc-slider" oninput="updateCalc()" class="w-full accent-rose-500 bg-gray-800 rounded-lg cursor-pointer h-2">
+                </div>
+                <div class="grid grid-cols-2 gap-2 bg-gray-900/60 p-2.5 rounded-xl border border-gray-800">
+                    <div class="text-center">
+                        <p class="text-[10px] text-gray-400">الربح اليومي متوقع</p>
+                        <p id="calc-daily" class="text-sm font-black text-emerald-400">+$12.50</p>
+                    </div>
+                    <div class="text-center">
+                        <p class="text-[10px] text-gray-400">الربح الشهري متوقع</p>
+                        <p id="calc-monthly" class="text-sm font-black text-rose-400">+$375.00</p>
+                    </div>
+                </div>
+                <button onclick="switchTab('deposit')" class="w-full bg-gradient-to-r from-rose-600 to-indigo-600 text-white font-extrabold text-xs py-2.5 rounded-xl hover:opacity-90 shadow-md transition">
+                    اشحن الرصيد لتفعيل هذا العائد الآن
+                </button>
+            </div>
+
+            <!-- Locked Hardware Nodes (VIP Levels) -->
+            <div class="space-y-3">
+                <div class="flex justify-between items-center">
+                    <h3 class="font-black text-sm text-gray-100 flex items-center gap-2">
+                        <i class="fa-solid fa-server text-rose-500"></i> عقد الحوسبة المتاحة
+                    </h3>
+                    <span class="text-[10px] text-rose-400 font-bold animate-pulse">● جميع الخُطط تحتاج إيداع للبدء</span>
+                </div>
+
+                <!-- Node 1 -->
+                <div class="glass-card glass-card-hover rounded-2xl p-4 transition-all duration-200 border-l-4 border-l-rose-500 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-rose-500/20 to-rose-700/30 border border-rose-500/30 flex items-center justify-center text-rose-400 text-xl font-black">
+                                A1
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white">عقدة MC-Alpha 1.0</h4>
+                                <p class="text-[11px] text-gray-400">دورة معالجة: <span class="text-gray-200 font-semibold">24 ساعة</span></p>
+                            </div>
+                        </div>
+                        <span class="bg-gray-800 text-gray-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-gray-700">
+                            <i class="fa-solid fa-lock text-amber-400"></i> مقفول
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-1 bg-gray-900/40 p-2 rounded-xl text-center border border-gray-800/50">
+                        <div>
+                            <p class="text-[9px] text-gray-400">تكلفة التفعيل</p>
+                            <p class="text-xs font-bold text-amber-400">$30 USDT</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-gray-400">الربح اليومي</p>
+                            <p class="text-xs font-bold text-emerald-400">$3.60 USDT</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-gray-400">العائد الإجمالي</p>
+                            <p class="text-xs font-bold text-rose-400">$108.00</p>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('deposit')" class="w-full bg-rose-600 hover:bg-rose-500 text-white font-bold text-xs py-2 rounded-xl shadow-md flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-key text-xs"></i> إيداع $30 لفتح العقدة
+                    </button>
+                </div>
+
+                <!-- Node 2 -->
+                <div class="glass-card glass-card-hover rounded-2xl p-4 transition-all duration-200 border-l-4 border-l-indigo-500 space-y-3">
+                    <div class="flex justify-between items-start">
+                        <div class="flex items-center gap-3">
+                            <div class="w-12 h-12 rounded-xl bg-gradient-to-br from-indigo-500/20 to-indigo-700/30 border border-indigo-500/30 flex items-center justify-center text-indigo-400 text-xl font-black">
+                                B2
+                            </div>
+                            <div>
+                                <h4 class="font-bold text-sm text-white">عقدة MC-Beta Ultra</h4>
+                                <p class="text-[11px] text-gray-400">دورة معالجة: <span class="text-gray-200 font-semibold">24 ساعة</span></p>
+                            </div>
+                        </div>
+                        <span class="bg-gray-800 text-gray-300 text-[10px] font-bold px-2.5 py-1 rounded-full border border-gray-700">
+                            <i class="fa-solid fa-lock text-amber-400"></i> مقفول
+                        </span>
+                    </div>
+                    <div class="grid grid-cols-3 gap-1 bg-gray-900/40 p-2 rounded-xl text-center border border-gray-800/50">
+                        <div>
+                            <p class="text-[9px] text-gray-400">تكلفة التفعيل</p>
+                            <p class="text-xs font-bold text-amber-400">$100 USDT</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-gray-400">الربح اليومي</p>
+                            <p class="text-xs font-bold text-emerald-400">$14.50 USDT</p>
+                        </div>
+                        <div>
+                            <p class="text-[9px] text-gray-400">العائد الإجمالي</p>
+                            <p class="text-xs font-bold text-rose-400">$435.00</p>
+                        </div>
+                    </div>
+                    <button onclick="switchTab('deposit')" class="w-full bg-indigo-600 hover:bg-indigo-500 text-white font-bold text-xs py-2 rounded-xl shadow-md flex items-center justify-center gap-2 transition">
+                        <i class="fa-solid fa-key text-xs"></i> إيداع $100 لفتح العقدة
+                    </button>
+                </div>
+            </div>
+
+            <!-- Live Deposit Stream Alert -->
+            <div id="live-deposit-toast" class="glass-card rounded-xl p-3 border border-emerald-500/30 flex items-center gap-3">
+                <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                    <i class="fa-solid fa-arrow-down-left"></i>
+                </div>
+                <div class="text-xs">
+                    <p class="font-bold text-gray-200">قام المستخدم <span class="text-amber-400">User_9281</span> بتفعيل عقدة Beta!</p>
+                    <p class="text-[10px] text-emerald-400 font-medium">إيداع ناجح: +$100 USDT قبل 12 ثانية</p>
+                </div>
+            </div>
+
+        </div>
+
+        <!-- TAB 2: DEPOSIT (PAGE WITH QR CODE & CRYPTO NETWORKS) -->
+        <div id="tab-deposit" class="hidden space-y-4">
+            <div class="glass-card rounded-2xl p-4 border border-rose-500/30 space-y-4">
+                <div class="text-center space-y-1">
+                    <h3 class="font-black text-lg text-white">مركز الشحن الفوري</h3>
+                    <p class="text-xs text-gray-400">اختر عملة الإيداع المطلوبة واشحن حسابك فورياً</p>
+                </div>
+
+                <!-- Network Selection Buttons -->
+                <div class="grid grid-cols-2 gap-2">
+                    <button class="p-3 rounded-xl bg-rose-600/20 border border-rose-500 text-white text-xs font-bold flex items-center justify-center gap-2">
+                        <i class="fa-solid fa-coins text-emerald-400"></i> USDT (TRC20)
+                    </button>
+                    <button class="p-3 rounded-xl bg-gray-800/60 border border-gray-700 text-gray-400 text-xs font-bold flex items-center justify-center gap-2 hover:border-gray-500">
+                        <i class="fa-solid fa-bolt text-yellow-400"></i> USDT (BEP20)
+                    </button>
+                </div>
+
+                <!-- QR & Address Display -->
+                <div class="bg-gray-900/80 rounded-2xl p-4 text-center space-y-3 border border-gray-800">
+                    <div class="bg-white p-2 w-32 h-32 mx-auto rounded-xl shadow-lg flex items-center justify-center">
+                        <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=TMCaiQuantumServerNodeDepositAddress99" alt="Deposit QR Code" class="w-full h-full">
+                    </div>
+                    <div>
+                        <p class="text-[10px] text-gray-400 mb-1">عنوان محفظة الإيداع الرسمية (TRC20):</p>
+                        <div class="flex items-center justify-between bg-black/50 p-2.5 rounded-xl border border-gray-800 text-xs">
+                            <span class="text-rose-400 font-mono font-bold truncate">TMCaiQ89XzNaP2x9001vK82mLa910pQ</span>
+                            <button onclick="copyAddress()" class="bg-rose-600 hover:bg-rose-500 text-white px-3 py-1 rounded-lg text-[10px] font-bold">نسخ</button>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-amber-500/10 border border-amber-500/20 rounded-xl p-3 text-xs text-amber-300 space-y-1">
+                    <p class="font-bold"><i class="fa-solid fa-triangle-exclamation"></i> تنبيه هدم الخدمة:</p>
+                    <ul class="text-[11px] text-gray-300 list-disc list-inside space-y-0.5">
+                        <li>الحد الأدنى للإيداع هو $20 USDT.</li>
+                        <li>تضاف مكافأة تفعيل 10%+ فور اكتمال معالجة المحفظة.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <!-- TAB 3: TASKS / COMPUTATION HUB -->
+        <div id="tab-tasks" class="hidden space-y-4">
+            <div class="glass-card rounded-2xl p-4 text-center space-y-2 border border-gray-800">
+                <i class="fa-solid fa-microchip text-4xl text-rose-500 animate-pulse"></i>
+                <h3 class="font-bold text-sm text-white">مركز المعالجة الذكي</h3>
+                <p class="text-xs text-gray-400">تقتضي سياسة MC-Ai تفعيل عقدة استثمارية واحدة على الأقل قبل فتح صلاحية تنفيذ المهام اليومية.</p>
+                <button onclick="switchTab('deposit')" class="mt-2 bg-gradient-to-r from-rose-600 to-amber-600 text-white font-bold text-xs px-5 py-2.5 rounded-xl shadow-lg">
+                    قم بالإيداع الآن لفتح المهام
+                </button>
+            </div>
+        </div>
+
+        <!-- TAB 4: PROFILE -->
+        <div id="tab-profile" class="hidden space-y-4">
+            <div class="glass-card rounded-2xl p-4 border border-gray-800 flex items-center justify-between">
+                <div class="flex items-center gap-3">
+                    <div class="w-12 h-12 rounded-2xl bg-gradient-to-tr from-rose-600 to-amber-500 flex items-center justify-center font-bold text-white text-lg">
+                        <i class="fa-solid fa-user-astronaut"></i>
+                    </div>
+                    <div>
+                        <h4 class="font-bold text-sm text-white">مستخدم #88902</h4>
+                        <p class="text-xs text-gray-400">الحالة: <span class="text-rose-500 font-bold">غير مفعل (يحتاج إيداع)</span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="glass-card rounded-2xl p-2 border border-gray-800 divide-y divide-gray-800/60 text-xs">
+                <a href="#" onclick="switchTab('deposit')" class="p-3 flex justify-between items-center text-gray-300 hover:text-white">
+                    <span><i class="fa-solid fa-wallet text-rose-500 w-5"></i> سجل الإيداعات والسحوبات</span>
+                    <i class="fa-solid fa-chevron-left text-gray-500"></i>
                 </a>
-                <a href="#" class="p-3.5 flex justify-between items-center text-xs font-bold text-gray-700 hover:bg-gray-50">
-                    <span><i class="fa-solid fa-clock-rotate-left text-rose-500 w-5"></i> سجل المالي</span>
-                    <i class="fa-solid fa-chevron-left text-gray-400"></i>
-                </a>
-                <a href="#" class="p-3.5 flex justify-between items-center text-xs font-bold text-rose-600 hover:bg-rose-50 rounded-b-2xl">
-                    <span><i class="fa-solid fa-right-from-bracket w-5"></i> تسجيل الخروج</span>
-                    <i class="fa-solid fa-chevron-left text-rose-400"></i>
+                <a href="#" class="p-3 flex justify-between items-center text-gray-300 hover:text-white">
+                    <span><i class="fa-solid fa-headset text-indigo-400 w-5"></i> الدعم الفني المباشر (24/7)</span>
+                    <i class="fa-solid fa-chevron-left text-gray-500"></i>
                 </a>
             </div>
-        </section>
-
-        <!-- DEPOSIT PAGE (MODAL-LIKE) -->
-        <section id="page-deposit" class="hidden space-y-4">
-            <h3 class="font-bold text-gray-800 text-sm">اختر شبكة الإيداع (Crypto Network):</h3>
-            <div class="bg-white rounded-2xl divide-y divide-gray-100 shadow-sm border border-gray-100 text-xs">
-                <div class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-                    <span class="font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-coins text-emerald-500"></i> TRC20-USDT</span>
-                    <i class="fa-solid fa-chevron-left text-gray-300"></i>
-                </div>
-                <div class="p-3.5 flex justify-between items-center cursor-pointer hover:bg-gray-50">
-                    <span class="font-bold text-gray-800 flex items-center gap-2"><i class="fa-solid fa-coins text-yellow-500"></i> BEP20-USDT</span>
-                    <i class="fa-solid fa-chevron-left text-gray-300"></i>
-                </div>
-            </div>
-            <button onclick="switchPage('home')" class="w-full bg-gray-200 text-gray-700 py-2.5 rounded-xl text-xs font-bold">العودة للرئيسية</button>
-        </section>
+        </div>
 
     </main>
 
     <!-- Bottom Navigation Bar -->
-    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-white border-t border-gray-200 px-4 py-2 flex justify-around items-center z-50">
-        <button onclick="switchPage('home')" id="nav-home" class="flex flex-col items-center text-rose-600">
-            <i class="fa-solid fa-house text-lg"></i>
+    <nav class="fixed bottom-0 left-0 right-0 max-w-md mx-auto bg-[#0b0f19]/90 backdrop-blur-lg border-t border-gray-800 px-6 py-2.5 flex justify-between items-center z-50">
+        <button onclick="switchTab('home')" id="nav-home" class="flex flex-col items-center text-rose-500">
+            <i class="fa-solid fa-cubes text-lg"></i>
             <span class="text-[10px] font-bold mt-1">الرئيسية</span>
         </button>
-        <button onclick="switchPage('tasks')" id="nav-tasks" class="flex flex-col items-center text-gray-400">
+        <button onclick="switchTab('tasks')" id="nav-tasks" class="flex flex-col items-center text-gray-500 hover:text-gray-300">
             <i class="fa-solid fa-list-check text-lg"></i>
             <span class="text-[10px] font-bold mt-1">المهام</span>
         </button>
-        <button onclick="switchPage('team')" id="nav-team" class="flex flex-col items-center text-gray-400">
-            <i class="fa-solid fa-users text-lg"></i>
-            <span class="text-[10px] font-bold mt-1">الفريق</span>
+        <button onclick="switchTab('deposit')" id="nav-deposit" class="flex flex-col items-center text-gray-500 hover:text-gray-300">
+            <i class="fa-solid fa-wallet text-lg"></i>
+            <span class="text-[10px] font-bold mt-1">الإيداع</span>
         </button>
-        <button onclick="switchPage('profile')" id="nav-profile" class="flex flex-col items-center text-gray-400">
+        <button onclick="switchTab('profile')" id="nav-profile" class="flex flex-col items-center text-gray-500 hover:text-gray-300">
             <i class="fa-solid fa-user text-lg"></i>
             <span class="text-[10px] font-bold mt-1">حسابي</span>
         </button>
     </nav>
 
-    <!-- Navigation JS Handler -->
+    <!-- JavaScript Interactions -->
     <script>
-        function switchPage(pageId) {
-            const pages = ['home', 'tasks', 'team', 'profile', 'deposit'];
-            pages.forEach(p => {
-                const el = document.getElementById(`page-${p}`);
-                if (el) el.classList.add('hidden');
-            });
-            
-            const targetPage = document.getElementById(`page-${pageId}`);
-            if (targetPage) targetPage.classList.remove('hidden');
-
-            // Reset navigation tab colors
-            const navs = ['home', 'tasks', 'team', 'profile'];
-            navs.forEach(n => {
-                const navBtn = document.getElementById(`nav-${n}`);
-                if (navBtn) {
-                    navBtn.classList.remove('text-rose-600');
-                    navBtn.classList.add('text-gray-400');
+        function switchTab(tabId) {
+            const tabs = ['home', 'deposit', 'tasks', 'profile'];
+            tabs.forEach(t => {
+                document.getElementById(`tab-${t}`).classList.add('hidden');
+                const navBtn = document.getElementById(`nav-${t}`);
+                if(navBtn) {
+                    navBtn.classList.remove('text-rose-500');
+                    navBtn.classList.add('text-gray-500');
                 }
             });
 
-            // Highlight active nav
-            const activeNav = document.getElementById(`nav-${pageId}`);
-            if (activeNav) {
-                activeNav.classList.remove('text-gray-400');
-                activeNav.classList.add('text-rose-600');
+            document.getElementById(`tab-${tabId}`).classList.remove('hidden');
+            const activeNav = document.getElementById(`nav-${tabId}`);
+            if(activeNav) {
+                activeNav.classList.remove('text-gray-500');
+                activeNav.classList.add('text-rose-500');
             }
         }
+
+        function updateCalc() {
+            const val = document.getElementById('calc-slider').value;
+            document.getElementById('calc-amount').innerText = `$${val} USDT`;
+            document.getElementById('calc-daily').innerText = `+$${(val * 0.125).toFixed(2)}`;
+            document.getElementById('calc-monthly').innerText = `+$${(val * 3.75).toFixed(2)}`;
+        }
+
+        function copyAddress() {
+            navigator.clipboard.writeText('TMCaiQ89XzNaP2x9001vK82mLa910pQ');
+            alert('تم نسخ عنوان الإيداع بنجاح!');
+        }
+
+        // Live Fake Deposit Stream Simulation (FOMO Trigger)
+        const fakeUsers = ['User_7712', 'CryptoKing', 'Alex_MC', 'Trader_Leb', 'Ahmed_VIP'];
+        const fakeNodes = ['Alpha 1.0', 'Beta Ultra', 'Quantum Pro'];
+        const fakeAmounts = [30, 100, 300, 600];
+
+        setInterval(() => {
+            const u = fakeUsers[Math.floor(Math.random() * fakeUsers.length)];
+            const n = fakeNodes[Math.floor(Math.random() * fakeNodes.length)];
+            const a = fakeAmounts[Math.floor(Math.random() * fakeAmounts.length)];
+            const toast = document.getElementById('live-deposit-toast');
+            if(toast) {
+                toast.innerHTML = `
+                    <div class="w-8 h-8 rounded-full bg-emerald-500/20 text-emerald-400 flex items-center justify-center font-bold text-sm">
+                        <i class="fa-solid fa-arrow-down-left"></i>
+                    </div>
+                    <div class="text-xs">
+                        <p class="font-bold text-gray-200">قام المستخدم <span class="text-amber-400">${u}</span> بتفعيل عقدة ${n}!</p>
+                        <p class="text-[10px] text-emerald-400 font-medium">إيداع ناجح: +$${a} USDT قبل بضع ثوانٍ</p>
+                    </div>
+                `;
+            }
+        }, 7000);
     </script>
 </body>
 </html>
