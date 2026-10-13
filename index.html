@@ -10,6 +10,8 @@
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <!-- Google Fonts (Cairo) -->
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <!-- Supabase JS SDK -->
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     <style>
         body { font-family: 'Cairo', sans-serif; }
         .quant-gradient { background: linear-gradient(135deg, #0f172a 0%, #1e1b4b 50%, #311042 100%); }
@@ -33,12 +35,12 @@
                     <p class="text-xs text-slate-400 mt-1">مرحباً بعودتك! أدخل بياناتك للمتابعة</p>
                 </div>
 
-                <form onsubmit="event.preventDefault(); switchScreen('dashboard-screen');" class="space-y-4">
+                <form id="login-form" class="space-y-4">
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">البريد الإلكتروني / رقم الهاتف</label>
+                        <label class="block text-xs font-semibold text-slate-300 mb-1">البريد الإلكتروني</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="text" required placeholder="user@example.com" class="w-full pl-3 pr-10 py-3 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
+                            <input type="email" id="login-email" required placeholder="user@example.com" class="w-full pl-3 pr-10 py-3 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
                         </div>
                     </div>
 
@@ -46,16 +48,8 @@
                         <label class="block text-xs font-semibold text-slate-300 mb-1">كلمة المرور</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" required placeholder="••••••••" class="w-full pl-3 pr-10 py-3 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
+                            <input type="password" id="login-password" required placeholder="••••••••" class="w-full pl-3 pr-10 py-3 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
                         </div>
-                    </div>
-
-                    <div class="flex justify-between items-center text-xs text-slate-400 pt-1">
-                        <label class="flex items-center space-x-2 space-x-reverse cursor-pointer">
-                            <input type="checkbox" class="rounded bg-slate-800 border-slate-700 text-indigo-600 focus:ring-0">
-                            <span>تذكرني</span>
-                        </label>
-                        <a href="#" class="text-indigo-400 hover:underline">نسيت كلمة المرور؟</a>
                     </div>
 
                     <button type="submit" class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-500 text-white font-bold rounded-xl shadow-lg shadow-indigo-600/30 transition duration-200 mt-4">
@@ -78,12 +72,12 @@
                     <p class="text-xs text-slate-400 mt-1">انضم إلى مجتمع التداول التحديد الكمي الذكي</p>
                 </div>
 
-                <form onsubmit="event.preventDefault(); switchScreen('dashboard-screen');" class="space-y-3">
+                <form id="register-form" class="space-y-3">
                     <div>
                         <label class="block text-xs font-semibold text-slate-300 mb-1">البريد الإلكتروني</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400"><i class="fa-solid fa-envelope"></i></span>
-                            <input type="email" required placeholder="name@domain.com" class="w-full pl-3 pr-10 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
+                            <input type="email" id="reg-email" required placeholder="name@domain.com" class="w-full pl-3 pr-10 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
                         </div>
                     </div>
 
@@ -91,23 +85,15 @@
                         <label class="block text-xs font-semibold text-slate-300 mb-1">كلمة المرور</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400"><i class="fa-solid fa-lock"></i></span>
-                            <input type="password" required placeholder="••••••••" class="w-full pl-3 pr-10 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
+                            <input type="password" id="reg-password" required placeholder="••••••••" class="w-full pl-3 pr-10 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
                         </div>
                     </div>
 
                     <div>
-                        <label class="block text-xs font-semibold text-slate-300 mb-1">تأكيد كلمة المرور</label>
-                        <div class="relative">
-                            <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-slate-400"><i class="fa-solid fa-shield-halved"></i></span>
-                            <input type="password" required placeholder="••••••••" class="w-full pl-3 pr-10 py-2.5 bg-slate-800/80 border border-slate-700 rounded-xl text-sm focus:outline-none focus:border-indigo-500 transition">
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-xs font-semibold text-amber-400 mb-1">رمز الدعوة (Invitation Code)</label>
+                        <label class="block text-xs font-semibold text-amber-400 mb-1">رمز الدعوة (اختياري)</label>
                         <div class="relative">
                             <span class="absolute inset-y-0 right-0 flex items-center pr-3 text-amber-400"><i class="fa-solid fa-ticket"></i></span>
-                            <input type="text" placeholder="مثال: QNT980" class="w-full pl-3 pr-10 py-2.5 bg-slate-800/80 border border-amber-500/40 rounded-xl text-sm text-amber-300 focus:outline-none focus:border-amber-400 transition font-mono">
+                            <input type="text" id="reg-invite" placeholder="مثال: QNT980" class="w-full pl-3 pr-10 py-2.5 bg-slate-800/80 border border-amber-500/40 rounded-xl text-sm text-amber-300 focus:outline-none focus:border-amber-400 transition font-mono">
                         </div>
                     </div>
 
@@ -128,13 +114,13 @@
             <!-- Header -->
             <div class="p-4 border-b border-slate-800 flex justify-between items-center bg-slate-900/50">
                 <div class="flex items-center space-x-3 space-x-reverse">
-                    <div class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-sm">US</div>
+                    <div class="w-9 h-9 rounded-full bg-indigo-600 flex items-center justify-center font-bold text-sm" id="user-initials">US</div>
                     <div>
-                        <h2 class="text-xs font-bold text-white">user@domain.com</h2>
-                        <span class="inline-block bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] px-2 py-0.5 rounded-full font-bold">VIP 1</span>
+                        <h2 class="text-xs font-bold text-white truncate max-w-[150px]" id="user-email-display">user@domain.com</h2>
+                        <span id="user-vip-badge" class="inline-block bg-amber-500/20 text-amber-400 border border-amber-500/30 text-[10px] px-2 py-0.5 rounded-full font-bold">VIP 1</span>
                     </div>
                 </div>
-                <button onclick="switchScreen('login-screen')" class="text-slate-400 hover:text-red-400 text-sm">
+                <button onclick="logout()" class="text-slate-400 hover:text-red-400 text-sm" title="تسجيل الخروج">
                     <i class="fa-solid fa-right-from-bracket"></i>
                 </button>
             </div>
@@ -146,28 +132,18 @@
                 <div class="card-glass rounded-2xl p-4 relative overflow-hidden">
                     <div class="absolute -left-4 -bottom-4 w-24 h-24 bg-indigo-500/10 rounded-full blur-xl"></div>
                     <span class="text-xs text-slate-400 block mb-1">إجمالي الرصيد (USDT)</span>
-                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight" id="user-balance">500.0000</div>
+                    <div class="text-3xl font-extrabold text-white font-mono tracking-tight" id="user-balance">0.0000</div>
                     
                     <div class="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-slate-700/50 text-xs">
                         <div>
-                            <span class="text-slate-400 block">أرباح اليوم</span>
-                            <span class="text-emerald-400 font-bold font-mono" id="today-profit">+0.0000 USDT</span>
+                            <span class="text-slate-400 block">رمز الدعوة الخاص بك</span>
+                            <span class="text-indigo-400 font-bold font-mono" id="my-invite-code">---</span>
                         </div>
                         <div>
-                            <span class="text-slate-400 block">المهام المتبقية</span>
-                            <span class="text-amber-400 font-bold font-mono" id="tasks-left">3 / 3</span>
+                            <span class="text-slate-400 block">المهام المكتفية اليوم</span>
+                            <span class="text-amber-400 font-bold font-mono" id="tasks-left">0 / 3</span>
                         </div>
                     </div>
-                </div>
-
-                <!-- Action Buttons -->
-                <div class="grid grid-cols-2 gap-3">
-                    <button class="py-2.5 bg-emerald-600/20 border border-emerald-500/30 text-emerald-400 hover:bg-emerald-600/30 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-wallet"></i> إيداع
-                    </button>
-                    <button class="py-2.5 bg-rose-600/20 border border-rose-500/30 text-rose-400 hover:bg-rose-600/30 rounded-xl text-xs font-bold flex items-center justify-center gap-2">
-                        <i class="fa-solid fa-arrow-up-from-ground-water"></i> سحب
-                    </button>
                 </div>
 
                 <!-- Quantification Interactive Engine Card -->
@@ -195,27 +171,6 @@
                     </div>
                 </div>
 
-                <!-- VIP Levels -->
-                <div>
-                    <h3 class="text-xs font-bold text-slate-300 mb-2">مستويات العضوية (VIP)</h3>
-                    <div class="space-y-2">
-                        <div class="p-3 bg-slate-800/60 border border-amber-500/40 rounded-xl flex justify-between items-center">
-                            <div>
-                                <span class="font-bold text-amber-400 text-xs">VIP 1 (الحالي)</span>
-                                <p class="text-[10px] text-slate-400">الحد الأدنى: $100 | الأرباح اليومية: 2.5%</p>
-                            </div>
-                            <span class="text-xs bg-amber-500/20 text-amber-300 px-2 py-1 rounded font-bold">نشط</span>
-                        </div>
-                        <div class="p-3 bg-slate-800/30 border border-slate-800 rounded-xl flex justify-between items-center opacity-60">
-                            <div>
-                                <span class="font-bold text-slate-300 text-xs">VIP 2</span>
-                                <p class="text-[10px] text-slate-400">الحد الأدنى: $500 | الأرباح اليومية: 3.2%</p>
-                            </div>
-                            <button class="text-[11px] bg-indigo-600 text-white px-2.5 py-1 rounded">ترقية</button>
-                        </div>
-                    </div>
-                </div>
-
             </div>
 
             <!-- Bottom Navigation Bar -->
@@ -229,26 +184,99 @@
 
     </div>
 
-    <!-- JS Engine -->
+    <!-- Supabase Connection & App Logic -->
     <script>
+        // إعدادات اتصال Supabase (استبدل القيم أدناه بالمعلومات الخاصة بمشروعك من لوحة تحكم Supabase -> Project Settings -> API)
+        const SUPABASE_URL = 'YOUR_SUPABASE_URL_HERE';
+        const SUPABASE_ANON_KEY = 'YOUR_SUPABASE_ANON_KEY_HERE';
+        
+        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+        let currentUser = null;
+
         function switchScreen(screenId) {
             document.getElementById('login-screen').classList.add('hidden');
             document.getElementById('register-screen').classList.add('hidden');
             document.getElementById('dashboard-screen').classList.add('hidden');
-
             document.getElementById(screenId).classList.remove('hidden');
         }
 
-        // Quant Task Logic Simulation
-        let tasksLeft = 3;
-        let currentBalance = 500.0000;
-        let todayProfit = 0.0000;
+        // التحقق من حالة الجلسة عند فتح الصفحة
+        window.addEventListener('DOMContentLoaded', async () => {
+            const { data: { session } } = await supabaseClient.auth.getSession();
+            if (session) {
+                await loadUserProfile(session.user.id, session.user.email);
+                switchScreen('dashboard-screen');
+            }
+        });
 
-        function startQuantification() {
-            if(tasksLeft <= 0) {
-                alert('لقد استكملت جميع مهام اليوم المتاحة لمستواك!');
+        // عملية تسجيل الدخول الحقيقية
+        document.getElementById('login-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email').value;
+            const password = document.getElementById('login-password').value;
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+            
+            if (error) {
+                alert('خطأ في تسجيل الدخول: ' + error.message);
                 return;
             }
+
+            await loadUserProfile(data.user.id, data.user.email);
+            switchScreen('dashboard-screen');
+        });
+
+        // عملية إنشاء حساب حقيقي
+        document.getElementById('register-form').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('reg-email').value;
+            const password = document.getElementById('reg-password').value;
+            const inviteCode = document.getElementById('reg-invite').value.trim();
+
+            const options = {};
+            if (inviteCode) {
+                options.data = { invite_code: inviteCode };
+            }
+
+            const { data, error } = await supabaseClient.auth.signUp({
+                email,
+                password,
+                options
+            });
+
+            if (error) {
+                alert('خطأ في التسجيل: ' + error.message);
+                return;
+            }
+
+            alert('تم إنشاء الحساب بنجاح! يجدر بك تسجيل الدخول الآن.');
+            switchScreen('login-screen');
+        });
+
+        // جلب بيانات الملف الشخصي من جدول profiles
+        async function loadUserProfile(userId, email) {
+            currentUser = userId;
+            document.getElementById('user-email-display').innerText = email;
+            document.getElementById('user-initials').innerText = email.substring(0, 2).toUpperCase();
+
+            const { data, error } = await supabaseClient
+                .from('profiles')
+                .select('*')
+                .eq('id', userId)
+                .single();
+
+            if (data) {
+                document.getElementById('user-balance').innerText = Number(data.balance).toFixed(4);
+                document.getElementById('my-invite-code').innerText = data.invite_code;
+                document.getElementById('tasks-left').innerText = `${data.today_tasks_completed} / 3`;
+                document.getElementById('user-vip-badge').innerText = `VIP ${data.vip_level}`;
+            }
+        }
+
+        // تشغيل التحديد الكمي الفعلي عبر Supabase Stored Procedure
+        async function startQuantification() {
+            if (!currentUser) return;
 
             const btn = document.getElementById('quant-btn');
             const statusBox = document.getElementById('quant-status');
@@ -263,7 +291,7 @@
                 "الاتصال بمقابس Binance & KuCoin API...",
                 "مقارنة فروقات الأسعار لتداول الفروق (Arbitrage)...",
                 "تنفيذ أمر الشراء بسعر منخفض وتصريف عالي...",
-                "حساب هامش الربح وإضافته للمحفظة..."
+                "حفظ الأرباح وتحديث الرصيد في قاعدة البيانات..."
             ];
 
             let progress = 0;
@@ -278,24 +306,42 @@
 
                 if (progress >= 100) {
                     clearInterval(interval);
-                    setTimeout(() => {
-                        // Profit Calculation (e.g. 0.8% per task)
-                        const profit = currentBalance * 0.0083;
-                        currentBalance += profit;
-                        todayProfit += profit;
-                        tasksLeft--;
+                    
+                    // استدعاء الدالة المخزنة في قاعدة البيانات لتنفيذ المهمة فعلياً
+                    supabaseClient.rpc('execute_quant_task', { user_uuid: currentUser })
+                        .then(async ({ data, error }) => {
+                            statusBox.classList.add('hidden');
+                            bar.style.width = '0%';
+                            btn.disabled = false;
 
-                        document.getElementById('user-balance').innerText = currentBalance.toFixed(4);
-                        document.getElementById('today-profit').innerText = '+' + todayProfit.toFixed(4) + ' USDT';
-                        document.getElementById('tasks-left').innerText = tasksLeft + ' / 3';
+                            if (error || !data.success) {
+                                alert(error ? error.message : (data.message || 'حدث خطأ ما'));
+                                return;
+                            }
 
-                        statusBox.classList.add('hidden');
-                        bar.style.width = '0%';
-                        btn.disabled = false;
-                        alert(`تمت العملية بنجاح! الأرباح المكتسبة: +${profit.toFixed(4)} USDT`);
-                    }, 500);
+                            alert(`تمت العملية بنجاح! الأرباح المكتسبة: +${Number(data.profit).toFixed(4)} USDT`);
+                            
+                            // إعادة تحديث البيانات الظاهرة
+                            const { data: profileData } = await supabaseClient
+                                .from('profiles')
+                                .select('*')
+                                .eq('id', currentUser)
+                                .single();
+
+                            if (profileData) {
+                                document.getElementById('user-balance').innerText = Number(profileData.balance).toFixed(4);
+                                document.getElementById('tasks-left').innerText = `${profileData.today_tasks_completed} / 3`;
+                            }
+                        });
                 }
-            }, 800);
+            }, 600);
+        }
+
+        // تسجيل الخروج
+        async function logout() {
+            await supabaseClient.auth.signOut();
+            currentUser = null;
+            switchScreen('login-screen');
         }
     </script>
 </body>
